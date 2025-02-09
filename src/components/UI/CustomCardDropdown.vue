@@ -1,55 +1,59 @@
 <template>
   <v-select
     v-model="selectedValue"
-    bgColor = "transparent"
+    bg-color="transparent"
     :items="items"
     :menu-props="{ maxHeight: '600', closeOnBack: true }"
     item-title="title"
     item-value="value"
     single-line
     hide-details
+    @update:model-value="update"
   >
+    <!-- Custom item template -->
     <template #item="{ item, props }">
-  <div v-bind="props" class="custom-option d-flex align-center">
-    <div class="mr-3">
-      <img
-        :src="item.raw?.avatar || item.avatar"
-        alt="Avatar"
-        style="width: 36px; height: 36px; border-radius: 50%;"
-      />
-    </div>
-    <div>
-      <div class="text-body-2">{{ item.raw?.title || item.title }}</div>
-      <div class="text-subtitle-1">
-        {{ item.raw?.subtitle || item.subtitle }}
+      <div v-bind="props" class="custom-option d-flex align-center">
+        <div class="mr-3">
+          <img
+            :src="item.raw?.avatar || item.avatar"
+            alt="Avatar"
+            style="width: 36px; height: 36px; border-radius: 50%;"
+          />
+        </div>
+        <div>
+          <div class="text-body-2">{{ item.raw?.title || item.title }}</div>
+          <div class="text-subtitle-1">
+            {{ item.raw?.subtitle || item.subtitle }}
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-</template>
+    </template>
 
-<template #selection="{ item }">
-  <div v-if="item" class="d-flex align-center" >
-    <div class="mr-3">
-      <img
-        :src="item.raw?.avatar || item.avatar"
-        alt="Avatar"
-        style="width: 36px; height: 36px; border-radius: 50%;"
-      />
-    </div>
-    <div>
-      <div class="text-body-2">{{ item.raw?.title || item.title }}</div>
-      <div class="text-subtitle-1">
-        {{ item.raw?.subtitle || item.subtitle }}
+    <!-- Custom selection template -->
+    <template #selection="{ item }">
+      <div v-if="item" class="d-flex align-center">
+        <div class="mr-3">
+          <img
+            :src="item.raw?.avatar || item.avatar"
+            alt="Avatar"
+            style="width: 36px; height: 36px; border-radius: 50%;"
+          />
+        </div>
+        <div>
+          <div class="text-body-2">{{ item.raw?.title || item.title }}</div>
+          <div class="text-subtitle-1">
+            {{ item.raw?.subtitle || item.subtitle }}
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-</template>
+    </template>
   </v-select>
 </template>
 
 <script setup>
-import { shallowRef, defineProps } from "vue";
+import { ref, defineProps, defineEmits, watch } from "vue";
 
+// Props
 const props = defineProps({
   items: {
     type: Array,
@@ -61,7 +65,24 @@ const props = defineProps({
   },
 });
 
-const selectedValue = shallowRef(props.selected || null);
+// Emits
+const emit = defineEmits(["update:modelValue"]);
+
+// Reactive state
+const selectedValue = ref(props.selected || null);
+
+// Watch for changes in the selected prop
+watch(
+  () => props.selected,
+  (newValue) => {
+    selectedValue.value = newValue;
+  }
+);
+
+// Emit updated value to parent
+const update = (value) => {
+  emit("update:modelValue", value);
+};
 </script>
 
 <style scoped>

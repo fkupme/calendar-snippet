@@ -1,27 +1,32 @@
 <template>
-  <CalendarPanel
-    :selectedView="selectedView"
-    v-model:selectedView="selectedView"
-  />
+  <CalendarPanel />
   <v-calendar
+    hideHeader="true"
+    :viewMode="settings.view || 'month'"
+    :hideDayHeader="false"
     ref="calendar"
-    v-model="selectedDate"
-    :events="events"
+    :model-value="settings.date"
     color="primary"
-    type="today"
-  ></v-calendar>
+  >
+    <template v-slot:day-header="{ categries }">{{ categries }}</template>
+    <template v-slot:day="{ categries }"> categries </template>
+    
+  </v-calendar>
 </template>
 
 <script setup>
-import { ref, shallowRef } from "vue";
-// import { VCalendar, VCalendarInterval } from 'vuetify/labs/VCalendar';
+import { VCalendar } from "vuetify/labs/VCalendar";
 import CalendarPanel from "@/components/CalendarPanel.vue";
+import { useStore } from "vuex";
+import { computed, ref } from "vue";
+const categries = ref([
+  { key: "music-loft-rehearsal", title: "Music Loft Rehearsal" },
+  { key:"new-school-studio", title:"New School Studio" },
+  { key:"bio-music-lab", title:"Bio Music Lab" },
+  { key:"trash-sound-space", title:"Trash Sound Space" },
+  { key:"oriental-melody-room", title:"Oriental Melody Room" },
+]);
 
-
-const today = new Date(). toISOString().substr(0, 10);
-const selectedView = shallowRef("today");
-const selectedDate = ref();
-
-
-
+const store = useStore();
+const settings = computed(() => store.state.calendar.calendarState);
 </script>

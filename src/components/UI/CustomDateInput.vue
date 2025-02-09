@@ -1,80 +1,74 @@
 <template>
-    <template v-if="solo">
-      <v-date-input
-        bgColor='transparent'
-        class="border-md"
-        style='border-radius: 40px; height: 40px;'
-        v-model="date"
-        :placeholder="FormattedDate"
-        hide-details
-        nextIcon="mdi-chevron-right"
-        prevIcon="mdi-chevron-left"
-        prependInner="false"
-        prependIcon='false'
-        appendInnerIcon="mdi-calendar-blank-outline"
-        @input="updateDate"
-      ></v-date-input>
-    </template>
-    <template v-else> 
-      <v-date-input
-        bgColor='transparent'
-        class="border-md"
-        style='border-radius: 40px;'
-        v-model="date"
-        :placeholder="FormattedDate"
-        hide-details
-        nextIcon="mdi-chevron-right"
-        prevIcon="mdi-chevron-left"
-        prependInner="false"
-        prependIcon='false'
-        appendInnerIcon="mdi-calendar-blank-outline"
-      ></v-date-input>
-      <v-date-input
-        bgColor='transparent'
-        class="border-md"
-        style='border-radius: 40px;'
-        v-model="date"
-        :placeholder="FormattedDate"
-        hide-details
-        nextIcon="mdi-chevron-right"
-        prevIcon="mdi-chevron-left"
-        prependInner="false"
-        prependIcon='false'
-        appendInnerIcon="mdi-calendar-blank-outline"
-      ></v-date-input>
-    </template>
+  <v-date-input
+    v-model="date"
+    :display-value="formattedDate"
+    @update:model-value="updateDate"
+    bg-color="transparent"
+    class="border-md"
+    style="border-radius: 40px"
+    variant="plain"
+    hide-details
+    prepend-icon="mdi-chevron-left"
+    append-icon="mdi-chevron-right"
+    append-inner-icon="mdi-calendar-blank-outline"
+    density="compact"
+    :min-width="160"
+    @click:prepend="goTo(-1)"
+    @click:append="goTo(1)"
+    persistent-placeholder
+  >
+    </v-date-input
+  >
 </template>
 
 <script setup>
 import { ref, computed, watch, onMounted, defineProps, defineEmits } from "vue";
-import format from "date-fns/format";
-import ruLocale from "date-fns/locale/ru";
 import { VDateInput } from "vuetify/labs/components";
+import { useDateFormat } from "@vueuse/core";
 
+// Props
 const props = defineProps({
   controls: { type: Boolean, default: false },
-  solo: {type: Boolean, default: true},
+  solo: { type: Boolean, default: true },
   date: { type: [String, Date], default: null },
 });
 
-const date = ref(props.date);
+// Emits
 const emits = defineEmits(["update:date"]);
 
+// Reactive state
+const date = ref(props.date);
 
-
+// Computed property for formatted date
 const formattedDate = computed(() => {
-  return date.value ? format(date.value, "dd MMM yyyy", { locale: ruLocale }) : '';
+  return date.value
+    ? useDateFormat(date.value, "DD MMM YYYY", { locales: "ru-RU" }).value
+    : "";
 });
 
-
-watch(date, (newDate) => {
-  if (typeof newDate === 'string') {
-    date.value = new Date(newDate);
+// Watch for changes in the date prop
+watch(
+  () => props.date,
+  (newDate) => {
+    if (newDate !== date.value) {
+      date.value = newDate;
+    }
   }
-});  
-</script>
+);
 
-<style scoped>
-.v-date-input {
-}
-</style>
+// Emit updated date to parent
+const updateDate = () => {
+  emits("update:date", date.value);
+};
+
+// Change date using prepend/append icons
+const goTo = (direction) => {
+  if (!date.value) return;
+
+  const newDate = new Date(date.value);
+  newDate.setDate(newDate.getDate() + direction);
+  date.value = newDate;
+
+  updateDate();
+};
+</script>

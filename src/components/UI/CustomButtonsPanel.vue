@@ -1,11 +1,12 @@
 <template>
   <v-btn-toggle
-  size="small"
+  density = "compact"
     v-model="selected"
-    @change="selectView"
+    @update:model-value="selectView"
     class="border-md"
     :height="props.height"
     mandatory
+    update-model-value=''
   >
     <template v-for="(label, value) in values" :key="value">
       <v-btn :value="value">
@@ -16,13 +17,13 @@
 </template>
 
 <script setup>
-import { shallowRef, defineProps, defineEmits,} from "vue";
+import { shallowRef, defineProps, defineEmits, watch,} from "vue";
 
 const props = defineProps({
   height: { type: Number, default: 30 },
   values: {
     type: Object,
-    default: () => ({ today: "Сегодня", week: "Неделя", month: "Месяц" }),
+    default: () => ({ day: "Сегодня", week: "Неделя", month: "Месяц" }),
   },
 });
 
@@ -37,6 +38,8 @@ const selectView = (view) => {
   selected.value = view;
   emit("update:selectedView", view);
 };
+
+watch
 </script>
 
 <style lang="scss" scoped>

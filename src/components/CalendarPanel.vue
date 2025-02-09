@@ -1,16 +1,19 @@
 <template>
-  <v-toolbar tag="div" color="white" height="56" elevation="3">
-    <CustomCardDropdown :selected="'music-loft-rehearsal'" :items="items" />
+  <v-toolbar tag="div" color="white" height="56">
+    <CustomCardDropdown
+      v-model='calendarSettings.location'
+      :selected="'music-loft-rehearsal'"
+      :items="items"
+      @update:modelValue="handleLocationChange"
+    />
     <v-spacer></v-spacer>
     <div class="controls-wrapper d-flex align-center">
-      <!-- Передаем selectedView как пропс и слушаем событие update:selectedView -->
       <CustomButtonsPanel
-        :values="{ today: 'Сегодня', week: 'Неделя', month: 'Месяц' }"
+        v-model="calendarSettings.view"
+        :values="{ day: 'Сегодня', week: 'Неделя', month: 'Месяц' }"
         :selected="calendarSettings.view"
         @update:selectedView="handleViewChange"
-        :height="36"
       />
-      <!-- Передаем date как пропс и слушаем событие update:date -->
       <CustomDateInput
         :solo="true"
         :controls="true"
@@ -25,7 +28,7 @@
 </template>
 
 <script setup>
-import { reactive } from "vue";
+import { reactive, watch } from "vue";
 import CustomButtonsPanel from "@/components/UI/CustomButtonsPanel.vue";
 import CustomCardDropdown from "@/components/UI/CustomCardDropdown.vue";
 import CustomDateInput from "./UI/CustomDateInput.vue";
@@ -33,23 +36,29 @@ import { useStore } from "vuex";
 
 const store = useStore();
 const items = store.state.data.studioCards;
+const settings = store.state.calendar.calendarState;
 
-// Реактивный объект для настроек календаря
 const calendarSettings = reactive({
-  view: "day",
-  place: "music-loft-rehearsal",
-  date: new Date(),
+  view: settings.view || "day",
+  location: settings.location || "music-loft-rehearsal",
+  date: settings.date ? new Date(settings.date) : new Date(),
 });
 
-// Обработчик изменения вида
 const handleViewChange = (newView) => {
   calendarSettings.view = newView;
 };
 
-// Обработчик изменения даты
 const handleDateChange = (newDate) => {
   calendarSettings.date = newDate;
 };
+
+const handleLocationChange = (newLocation) => {
+  calendarSettings.location = newLocation;
+};
+
+watch(calendarSettings, (newSettings) => {
+  store.commit("calendar/SET_CALENDAR_STATE", newSettings);
+}, { immediate: true });
 </script>
 
 <style lang="scss" scoped>
@@ -60,13 +69,12 @@ const handleDateChange = (newDate) => {
   border-radius: 10px 10px 0 0;
 }
 
-
-.v-btn{
-border: 2px solid #E0E0E0;
+.v-btn {
+  border: 2px solid #E0E0E0;
 }
 
 .controls-wrapper {
-  height: 30px;
- gap: 8px;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 </style>
