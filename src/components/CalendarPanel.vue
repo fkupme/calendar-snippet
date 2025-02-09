@@ -1,131 +1,72 @@
 <template>
-  <div>
-    <v-toolbar>
-      <!-- Кастомный v-select -->
-      <v-select
-        color="primary"
-        v-model="selectValue"
-        :items="options"
-        item-title="title"
-        item-value="value"
-        single-line
-        hide-details
-      >
-        <!-- Кастомизация опций -->
-        <template #item="{ item, props }">
-          <div v-bind="props" class="custom-option d-flex align-center">
-            <div class="mr-3">
-              <img
-                :src="useImageUrl(item.avatar)"
-                alt="Avatar"
-                style="width: 36px; height: 36px; border-radius: 50%"
-              />
-            </div>
-            <div>
-              <div class="text-subtitle-1">{{ item.title }}</div>
-              <div class="text-caption font-weight-bold text-lowercase">
-                {{ item.subtitle }}
-              </div>
-            </div>
-          </div>
-        </template>
-
-        <!-- Кастомизация выбранного значения -->
-        <template #selection="{ item }">
-          <div class="d-flex align-center">
-            <div class="mr-3">
-              <img
-                :src="useImageUrl(item.avatar)"
-                alt="Avatar"
-                style="width: 36px; height: 36px; border-radius: 50%"
-              />
-            </div>
-            <div>
-              <div class="text-subtitle-1">{{ item.title }}</div>
-              <div class="text-caption font-weight-bold text-lowercase">
-                {{ item.subtitle }}
-              </div>
-            </div>
-          </div>
-        </template>
-      </v-select>
-
-      <v-spacer></v-spacer>
-
-      <!-- v-btn-toggle для выбора периода (Сегодня, Неделя, Месяц) -->
-      <v-btn-toggle v-model="selected" @change="selectView" mandatory>
-        <v-btn value="today">Сегодня</v-btn>
-        <v-btn value="week">Неделя</v-btn>
-        <v-btn value="month">Месяц</v-btn>
-      </v-btn-toggle>
-
-      <v-spacer></v-spacer>
-
-      <v-date-input
-        label="Date of birth"
-        prepend-icon=""
-        variant="outlined"
-        persistent-placeholdera
-      ></v-date-input>
-    </v-toolbar>
-  </div>
+  <v-toolbar tag="div" color="white" height="56" elevation="3">
+    <CustomCardDropdown :selected="'music-loft-rehearsal'" :items="items" />
+    <v-spacer></v-spacer>
+    <div class="controls-wrapper d-flex align-center">
+      <!-- Передаем selectedView как пропс и слушаем событие update:selectedView -->
+      <CustomButtonsPanel
+        :values="{ today: 'Сегодня', week: 'Неделя', month: 'Месяц' }"
+        :selected="calendarSettings.view"
+        @update:selectedView="handleViewChange"
+        :height="36"
+      />
+      <!-- Передаем date как пропс и слушаем событие update:date -->
+      <CustomDateInput
+        :solo="true"
+        :controls="true"
+        :date="calendarSettings.date"
+        @update:date="handleDateChange"
+      />
+      <v-btn icon="mdi-help" color="secondary"></v-btn>
+      <v-btn icon="mdi-menu" color="secondary"></v-btn>
+      <v-btn icon="mdi-arrow-top-right" color="secondary"></v-btn>
+    </div>
+  </v-toolbar>
 </template>
 
 <script setup>
-import { shallowRef, watch, ref } from "vue";
-import useImageUrl from "@/utils/useImageUrl";
+import { reactive } from "vue";
+import CustomButtonsPanel from "@/components/UI/CustomButtonsPanel.vue";
+import CustomCardDropdown from "@/components/UI/CustomCardDropdown.vue";
+import CustomDateInput from "./UI/CustomDateInput.vue";
+import { useStore } from "vuex";
 
-// Props
-const props = defineProps({
-  selectedView: { type: String, default: "today", required: true },
-  selectedDate: {
-    type: String,
-    default: () => new Date().toISOString().substr(0, 10),
-    required: true,
-  },
-  options: { type: Array, default: () => [], required: true },
+const store = useStore();
+const items = store.state.data.studioCards;
+
+// Реактивный объект для настроек календаря
+const calendarSettings = reactive({
+  view: "day",
+  place: "music-loft-rehearsal",
+  date: new Date(),
 });
 
-// Emits
-const emit = defineEmits(["update:selectedView"]);
-
-// Локальные переменные
-const selectValue = ref(null);
-const selected = shallowRef("today");
-const date = shallowRef(() => new Date().toISOString().substr(0, 10));
-
-// Обработка изменения периода
-const selectView = (view) => {
-  selected.value = view;
-  emit("update:selectedView", view);
+// Обработчик изменения вида
+const handleViewChange = (newView) => {
+  calendarSettings.view = newView;
 };
 
-// Следим за изменениями props
-watch(
-  () => props.selectedView,
-  (newVal) => {
-    selected.value = newVal;
-  }
-);
+// Обработчик изменения даты
+const handleDateChange = (newDate) => {
+  calendarSettings.date = newDate;
+};
 </script>
 
 <style lang="scss" scoped>
 .v-toolbar {
-  background: transparent;
+  padding-inline: 20px;
+  padding-block-start: 20px;
+  background-color: white;
+  border-radius: 10px 10px 0 0;
 }
-.v-select {
-  background: transparent;
+
+
+.v-btn{
+border: 2px solid #E0E0E0;
 }
-.v-btn-toggle {
-  border-radius: 40px;
-}
-.v-btn {
-  border-radius: 40px;
-  &--active {
-    background: transparent;
-  }
-}
-.custom-option {
-  padding: 8px;
+
+.controls-wrapper {
+  height: 30px;
+ gap: 8px;
 }
 </style>

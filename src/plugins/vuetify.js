@@ -1,7 +1,7 @@
 import "@mdi/font/css/materialdesignicons.css";
 import "vuetify/styles";
-import { createVuetify} from "vuetify";
-import { VCalendar } from 'vuetify/labs/components'
+import { createVuetify } from "vuetify";
+import { VCalendar, VDateInput } from "vuetify/labs/components";
 
 const myCustomLightTheme = {
   dark: false,
@@ -12,10 +12,10 @@ const myCustomLightTheme = {
     "surface-light": "#EEEEEE",
     "surface-variant": "#424242",
     "on-surface-variant": "#EEEEEE",
-    primary: "#1867C0",
-    "primary-darken-1": "#1F5592",
-    secondary: "#48A9A6",
-    "secondary-darken-1": "#018786",
+    primary: "#000",
+    "primary-darken-1": "rgb(37, 37, 41)",
+    secondary: "rgb(147, 146, 146)",
+    "secondary-lighten-1": "rgb(207, 207, 207)",
     error: "#B00020",
     info: "#2196F3",
     success: "#4CAF50",
@@ -38,6 +38,7 @@ const myCustomLightTheme = {
     "theme-on-kbd": "#FFFFFF",
     "theme-code": "#F5F5F5",
     "theme-on-code": "#000000",
+    "font-family": '"Inter", sans-serif !important',
   },
 };
 
@@ -49,7 +50,13 @@ export default createVuetify({
       myCustomLightTheme,
     },
     components:{
-      VCalendar
+      VCalendar,
+      VDateInput
     }
   },
+  defaults:{
+    global:{
+      fontFamily: '"Inter", sans-serif',
+    }
+  }
 });

@@ -1,13 +1,11 @@
 <template>
   <v-container fluid>
+    <LeftSidebar />
     <v-row>
     </v-row >
     <v-row>
-      <v-col>
-        <LeftSidebar />
-      </v-col>
-
-      <v-col cols="8">
+     
+      <v-col cols="9">
         <CalendarView />
       </v-col>
 

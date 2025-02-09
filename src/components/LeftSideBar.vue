@@ -3,7 +3,7 @@
     absolute
     :order='0'
     width='180'
-    style="bottom: auto; top: auto; height: auto; z-index: 10000;"
+    style="bottom: auto; top: auto; height: auto;"
     v-model="drawer"
     elevation="3"
     :rail="rail"
@@ -16,7 +16,7 @@
         link
         @click="item.action"
       >
-        <template #prepend>
+        <template v-slot:prepend>
           <v-img :src="item.icon" icon alt="icon" class="icon"></v-img>
         </template>
         <v-list-item-title v-if="!rail">{{ item.title }}</v-list-item-title>
@@ -32,14 +32,12 @@
 <script setup>
 import { shallowRef } from "vue";
 
-
 const drawer = shallowRef(true);
 const rail = shallowRef(true);
 
-const styledFunction = (arg, styles)=>{
+const styledFunction = (arg, styles) => {
   if (arg) return styles;
-}
-
+};
 
 const toggleRail = () => {
   rail.value = !rail.value;
@@ -78,23 +76,24 @@ const items = [
 .v-navigation-drawer {
   width: 150px;
   border-radius: 0 10px 10px 0;
-  &--rail{
+  &--rail {
     width: 64px;
   }
 }
+
 .icon {
   width: 24px;
   height: 24px;
 }
-.v-list{
 
+.v-list {
   &-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  &:hover {
-    background-color: #e0e0e0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    &:hover {
+      background-color: #e0e0e0;
+    }
   }
-}
 }
 </style>
