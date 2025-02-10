@@ -1,6 +1,3 @@
-
-
-
 const calendarModule = {
 	state: {
 		calendarState: {},
@@ -104,8 +101,157 @@ const calendarModule = {
 				status: "whithout",
 				price: 3000,
 				client_id: 8
+			},
+			{
+				id: 11,
+				title: "Запись нового альбома",
+				start: "2025-02-11T09:00:00",
+				end: "2025-02-11T12:00:00",
+				category: "music-loft-rehearsal",
+				status: "paid",
+				price: 10000,
+				client_id: 9
+			},
+			{
+				id: 12,
+				title: "Репетиция концерта",
+				start: "2025-02-12T14:00:00",
+				end: "2025-02-12T17:00:00",
+				category: "new-school-studio",
+				status: "reserved",
+				price: 7500,
+				client_id: 10
+			},
+			{
+				id: 13,
+				title: "Мастер-класс по гитаре",
+				start: "2025-02-13T10:00:00",
+				end: "2025-02-13T12:00:00",
+				category: "oriental-melody-room",
+				status: "paid_partially",
+				price: 4000,
+				client_id: 11
+			},
+			{
+				id: 14,
+				title: "Сведение трека",
+				start: "2025-02-14T16:00:00",
+				end: "2025-02-14T18:00:00",
+				category: "bio-music-lab",
+				status: "paid",
+				price: 6000,
+				client_id: 12
+			},
+			{
+				id: 15,
+				title: "Запись вокала",
+				start: "2025-02-15T13:00:00",
+				end: "2025-02-15T15:00:00",
+				category: "trash-sound-space",
+				status: "reserved",
+				price: 5000,
+				client_id: 13
+			},
+			{
+				id: 16,
+				title: "Репетиция с оркестром",
+				start: "2025-02-16T09:00:00",
+				end: "2025-02-16T12:00:00",
+				category: "music-loft-rehearsal",
+				status: "paid",
+				price: 12000,
+				client_id: 9
+			},
+			{
+				id: 17,
+				title: "Запись клипа",
+				start: "2025-02-17T14:00:00",
+				end: "2025-02-17T18:00:00",
+				category: "new-school-studio",
+				status: "reserved",
+				price: 15000,
+				client_id: 10
+			},
+			{
+				id: 18,
+				title: "Мастер-класс по вокалу",
+				start: "2025-02-18T10:00:00",
+				end: "2025-02-18T12:00:00",
+				category: "oriental-melody-room",
+				status: "paid_partially",
+				price: 4500,
+				client_id: 11
+			},
+			{
+				id: 19,
+				title: "Сведение альбома",
+				start: "2025-02-19T16:00:00",
+				end: "2025-02-19T20:00:00",
+				category: "bio-music-lab",
+				status: "paid",
+				price: 8000,
+				client_id: 12
+			},
+			{
+				id: 20,
+				title: "Запись инструментов",
+				start: "2025-02-20T13:00:00",
+				end: "2025-02-20T15:00:00",
+				category: "trash-sound-space",
+				status: "reserved",
+				price: 5500,
+				client_id: 13
+			},
+			{
+				id: 21,
+				title: "Репетиция с хором",
+				start: "2025-02-21T09:00:00",
+				end: "2025-02-21T12:00:00",
+				category: "music-loft-rehearsal",
+				status: "paid",
+				price: 11000,
+				client_id: 9
+			},
+			{
+				id: 22,
+				title: "Запись саундтрека",
+				start: "2025-02-22T14:00:00",
+				end: "2025-02-22T17:00:00",
+				category: "new-school-studio",
+				status: "reserved",
+				price: 9000,
+				client_id: 10
+			},
+			{
+				id: 23,
+				title: "Мастер-класс по ударным",
+				start: "2025-02-23T10:00:00",
+				end: "2025-02-23T12:00:00",
+				category: "oriental-melody-room",
+				status: "paid_partially",
+				price: 3500,
+				client_id: 11
+			},
+			{
+				id: 24,
+				title: "Сведение трека",
+				start: "2025-02-24T16:00:00",
+				end: "2025-02-24T18:00:00",
+				category: "bio-music-lab",
+				status: "paid",
+				price: 6000,
+				client_id: 12
+			},
+			{
+				id: 25,
+				title: "Запись вокала",
+				start: "2025-02-25T13:00:00",
+				end: "2025-02-25T15:00:00",
+				category: "trash-sound-space",
+				status: "reserved",
+				price: 5000,
+				client_id: 13
 			}
-
 		],
 		clients: [
 			{
@@ -188,6 +334,56 @@ const calendarModule = {
 				rating: 1100,
 				fee: 520
 			},
+			{
+				id: 9,
+				name: "Филипп Киркоров",
+				phone: "89256666666",
+				email: "kirkorov@music.com",
+				closed: 50,
+				messages: 60,
+				rating: 2000,
+				fee: 1000
+			},
+			{
+				id: 10,
+				name: "Алла Пугачева",
+				phone: "89257777777",
+				email: "pugacheva@music.com",
+				closed: 45,
+				messages: 55,
+				rating: 1900,
+				fee: 950
+			},
+			{
+				id: 11,
+				name: "Дима Билан",
+				phone: "89258888888",
+				email: "bilan@music.com",
+				closed: 40,
+				messages: 50,
+				rating: 1800,
+				fee: 900
+			},
+			{
+				id: 12,
+				name: "Григорий Лепс",
+				phone: "89259999999",
+				email: "leps@music.com",
+				closed: 35,
+				messages: 45,
+				rating: 1700,
+				fee: 850
+			},
+			{
+				id: 13,
+				name: "Валерия",
+				phone: "89251010101",
+				email: "valeria@music.com",
+				closed: 30,
+				messages: 40,
+				rating: 1600,
+				fee: 800
+			}
 		],
 		redactingEvent: null
 	},
@@ -198,7 +394,10 @@ const calendarModule = {
 		},
 		SET_REDACTING_EVENT(state, payload) {
 			state.redactingEvent = payload
-				localStorage.setItem('redactingEvent', JSON.stringify(payload))
+			localStorage.setItem('redactingEvent', JSON.stringify(payload))
+		},
+		ADD_EVENT(state, event) {
+			state.events.push(event)
 		}
 	},
 	actions: {
@@ -210,23 +409,26 @@ const calendarModule = {
 			calendarState = JSON.parse(calendarState)
 			calendarState.date = new Date(calendarState.date)
 			commit('SET_CALENDAR_STATE', calendarState)
+		},
+		addEvent({ commit }, event) {
+			commit('ADD_EVENT', event)
 		}
 	},
 	getters: {
-    getEventsByDate: (state) => (date, location) => {
-      return state.events.filter(event => {
-        const eventDate = new Date(event.start);
-        const targetDate = new Date(date);
-        const isSameDate = eventDate.toDateString() === targetDate.toDateString();
-        
-        // Если выбраны все студии, возвращаем все события за дату
-        if (location === 'all-studios') {
-          return isSameDate;
-        }
-        
-        // Иначе фильтруем по конкретной студии
-        return isSameDate && event.category === location;
-      });
+		getEventsByDate: (state) => (date, location) => {
+			return state.events.filter(event => {
+				const eventDate = new Date(event.start)
+				const targetDate = new Date(date)
+				const isSameDate = eventDate.toDateString() === targetDate.toDateString()
+
+				// Если выбраны все студии, возвращаем все события за дату
+				if (location === 'all-studios') {
+					return isSameDate
+				}
+
+				// Иначе фильтруем по конкретной студии
+				return isSameDate && event.category === location
+			})
 		}
 	},
 	namespaced: true,

@@ -10,7 +10,7 @@
       </v-col>
 
       <v-col cols="3">
-
+        <RightSidebar />
       </v-col>
     </v-row>
   </v-container>
