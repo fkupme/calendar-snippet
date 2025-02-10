@@ -10,7 +10,7 @@
     hide-details
     @update:model-value="update"
   >
-    <!-- Custom item template -->
+
     <template #item="{ item, props }">
       <div v-bind="props" class="custom-option d-flex align-center">
         <div class="mr-3">
@@ -29,7 +29,6 @@
       </div>
     </template>
 
-    <!-- Custom selection template -->
     <template #selection="{ item }">
       <div v-if="item" class="d-flex align-center">
         <div class="mr-3">
@@ -51,9 +50,8 @@
 </template>
 
 <script setup>
-import { ref, defineProps, defineEmits, watch } from "vue";
+import { ref, defineEmits, watch } from "vue";
 
-// Props
 const props = defineProps({
   items: {
     type: Array,
@@ -65,13 +63,10 @@ const props = defineProps({
   },
 });
 
-// Emits
 const emit = defineEmits(["update:modelValue"]);
 
-// Reactive state
 const selectedValue = ref(props.selected || null);
 
-// Watch for changes in the selected prop
 watch(
   () => props.selected,
   (newValue) => {
@@ -79,7 +74,7 @@ watch(
   }
 );
 
-// Emit updated value to parent
+
 const update = (value) => {
   emit("update:modelValue", value);
 };

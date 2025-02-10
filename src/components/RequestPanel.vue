@@ -53,8 +53,8 @@
                     Отклонить
                   </v-btn>
                   <v-btn 
-                    variant="contained" 
-                    class="bg-primary font-weight-medium fs-12" 
+                    color="primary" 
+                    class="text-button font-weight-medium fs-12" 
                     size="small"
                     @click="acceptRequest(request.id, 'inProgress')"
 										:disabled="request.status === 'processed'"

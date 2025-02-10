@@ -1,3 +1,5 @@
+import useImageUrl from "@/utils/useImageUrl"
+
 const calendarModule = {
 	state: {
 		calendarState: {},
@@ -262,7 +264,9 @@ const calendarModule = {
 				closed: 24,
 				messages: 24,
 				rating: 1200,
-				fee: 550
+				fee: 550,
+				status: 'pro',
+				avatar: '/images/user-avatar.png'
 			},
 			{
 				id: 2,
@@ -272,7 +276,9 @@ const calendarModule = {
 				closed: 36,
 				messages: 48,
 				rating: 1500,
-				fee: 700
+				fee: 700,
+				status: 'pro',
+				avatar: null
 			},
 			{
 				id: 3,
@@ -282,7 +288,8 @@ const calendarModule = {
 				closed: 42,
 				messages: 56,
 				rating: 1800,
-				fee: 800
+				status: null,
+				avatar: '/images/user-avatar.png'
 			},
 			{
 				id: 4,
@@ -292,7 +299,9 @@ const calendarModule = {
 				closed: 28,
 				messages: 32,
 				rating: 1300,
-				fee: 600
+				fee: 600,
+				status: 'pro',
+				avatar: null
 			},
 			{
 				id: 5,
@@ -302,7 +311,9 @@ const calendarModule = {
 				closed: 30,
 				messages: 36,
 				rating: 1400,
-				fee: 650
+				fee: 650,
+				status: 'pro',
+				avatar: '/images/user-avatar.png'
 			},
 			{
 				id: 6,
@@ -312,7 +323,8 @@ const calendarModule = {
 				closed: 26,
 				messages: 30,
 				rating: 1250,
-				fee: 580
+				status: null,
+				avatar: null
 			},
 			{
 				id: 7,
@@ -322,7 +334,9 @@ const calendarModule = {
 				closed: 34,
 				messages: 40,
 				rating: 1600,
-				fee: 720
+				fee: 720,
+				status: 'pro',
+				avatar: '/images/user-avatar.png'
 			},
 			{
 				id: 8,
@@ -332,7 +346,8 @@ const calendarModule = {
 				closed: 22,
 				messages: 28,
 				rating: 1100,
-				fee: 520
+				status: null,
+				avatar: null
 			},
 			{
 				id: 9,
@@ -342,7 +357,9 @@ const calendarModule = {
 				closed: 50,
 				messages: 60,
 				rating: 2000,
-				fee: 1000
+				fee: 1000,
+				status: 'pro',
+				avatar: '/images/user-avatar.png'
 			},
 			{
 				id: 10,
@@ -352,7 +369,9 @@ const calendarModule = {
 				closed: 45,
 				messages: 55,
 				rating: 1900,
-				fee: 950
+				fee: 950,
+				status: 'pro',
+				avatar: null
 			},
 			{
 				id: 11,
@@ -362,7 +381,8 @@ const calendarModule = {
 				closed: 40,
 				messages: 50,
 				rating: 1800,
-				fee: 900
+				status: null,
+				avatar: '/images/user-avatar.png'
 			},
 			{
 				id: 12,
@@ -372,7 +392,9 @@ const calendarModule = {
 				closed: 35,
 				messages: 45,
 				rating: 1700,
-				fee: 850
+				fee: 850,
+				status: 'pro',
+				avatar: null
 			},
 			{
 				id: 13,
@@ -382,13 +404,16 @@ const calendarModule = {
 				closed: 30,
 				messages: 40,
 				rating: 1600,
-				fee: 800
+				status: null,
+				avatar: '/images/user-avatar.png'
 			}
 		],
-		redactingEvent: null
+		redactingEvent: null,
+		filteredClients: []
 	},
 	mutations: {
 		SET_CALENDAR_STATE(state, payload) {
+
 			state.calendarState = payload
 			localStorage.setItem('calendarState', JSON.stringify(payload))
 		},
@@ -398,10 +423,18 @@ const calendarModule = {
 		},
 		ADD_EVENT(state, event) {
 			state.events.push(event)
+		},
+		SET_FILTERED_CLIENTS(state, payload) {
+			state.filteredClients = payload
+		},
+
+		PUSH_CLIENT(state, client) {
+			state.clients.push(client)
 		}
 	},
 	actions: {
-		getCashedCalendarState({ commit }) {
+		getCashedCalendarState({ commit, state }) {
+
 			let calendarState = localStorage.getItem('calendarState')
 			if (!calendarState) {
 				return
@@ -409,29 +442,58 @@ const calendarModule = {
 			calendarState = JSON.parse(calendarState)
 			calendarState.date = new Date(calendarState.date)
 			commit('SET_CALENDAR_STATE', calendarState)
+			commit('SET_FILTERED_CLIENTS', state.clients)
+
 		},
 		addEvent({ commit }, event) {
 			commit('ADD_EVENT', event)
+		},
+		fetchClients({ state, commit }, { search, searchFields }) {
+			if (!search?.trim()) {
+				commit('SET_FILTERED_CLIENTS', null)
+				return
+			}
+			const searchLower = search.toLowerCase().trim();
+			const filtered = state.clients.filter(client => {
+				return searchFields.some(field => {
+					const value = client[field];
+					if (!value) return false;
+					return value.toString().toLowerCase().includes(searchLower);
+				});
+			});
+      
+      
+			commit('SET_FILTERED_CLIENTS', filtered)
+		},
+
+
+
+
+		pushClient({ commit }, client) {
+			commit('PUSH_CLIENT', client)
+			return client;
 		}
 	},
 	getters: {
+
 		getEventsByDate: (state) => (date, location) => {
+
+
+
 			return state.events.filter(event => {
 				const eventDate = new Date(event.start)
 				const targetDate = new Date(date)
 				const isSameDate = eventDate.toDateString() === targetDate.toDateString()
-
-				// Если выбраны все студии, возвращаем все события за дату
 				if (location === 'all-studios') {
 					return isSameDate
 				}
-
-				// Иначе фильтруем по конкретной студии
 				return isSameDate && event.category === location
 			})
-		}
+		},
+		getFilteredClients: (state) => state.filteredClients,
 	},
 	namespaced: true,
+
 }
 
 

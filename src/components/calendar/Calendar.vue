@@ -4,7 +4,10 @@
     class="calendar"
     elevation="3"
     :min-width="600"
+		:max-height="620"
   >
+
+
     <v-card-text 
       :style="contentStyles"
       class="calendar__content pa-0"
@@ -14,6 +17,7 @@
         :date="settings.date"
         :location="settings.location"
       />
+			
     </v-card-text>
   </v-card>
 </template>

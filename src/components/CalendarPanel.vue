@@ -20,9 +20,10 @@
         :date="calendarSettings.date"
         @update:date="handleDateChange"
       />
-      <v-btn icon="mdi-help" color="secondary" density="compact" height="32" width="32"></v-btn>
-      <v-btn icon="mdi-menu" color="secondary" density="compact" height="32" width="32"></v-btn>
-      <v-btn icon="mdi-arrow-top-right" color="secondary" density="compact" height="32" width="32"></v-btn>
+      <v-btn icon="mdi-help"  color="secondary" density="compact" height="32" width="32" variant="outlined"></v-btn>
+      <v-btn icon="mdi-menu" color="secondary" density="compact" height="32" width="32" variant="outlined"></v-btn>
+      <v-btn icon="mdi-arrow-top-right" color="secondary" density="compact" height="32" width="32" variant="outlined"></v-btn>
+
     </div>
   </v-toolbar>
 </template>
@@ -70,8 +71,9 @@ watch(calendarSettings, (newSettings) => {
 }
 
 .v-btn {
-  border: 2px solid #E0E0E0;
+  outline-color: #E0E0E0;
 }
+
 
 .controls-wrapper {
   flex-wrap: wrap;

@@ -1,6 +1,7 @@
 <template>
   <v-container fluid>
     <LeftSidebar />
+		<NewOrderForm/>
     <v-row>
     </v-row >
     <v-row>
@@ -20,7 +21,11 @@
 import LeftSidebar from "./LeftSideBar.vue";
 import CalendarView from "./CalendarView.vue";
 import RightSidebar from "./RightSideBar.vue";
+import NewOrderForm from "./Forms/NewOrderForm.vue";
 </script>
+
+
+
 
 
 <style scoped>

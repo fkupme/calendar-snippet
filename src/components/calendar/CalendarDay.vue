@@ -12,7 +12,6 @@
       </v-col>
     </v-row>
 
-    <!-- Временная сетка -->
     <div class="time-grid">
       <v-row
         v-for="hour in timeSlots"
@@ -60,10 +59,8 @@ const props = defineProps({
 
 const store = useStore();
 
-// Генерация временных интервалов (с 8:00 до 23:00)
 const timeSlots = computed(() => Array.from({ length: 16 }, (_, i) => i + 8));
 
-// Определение категорий
 const categories = [
   { key: "music-loft-rehearsal", title: "Traditional" },
   { key: "new-school-studio", title: "New School" },
@@ -72,10 +69,8 @@ const categories = [
   { key: "oriental-melody-room", title: "Oriental" },
 ];
 
-// Форматирование часа
 const formatHour = (hour) => `${hour.toString().padStart(2, "0")}:00`;
 
-// Проверка наличия события в указанное время и категорию
 const hasEvent = (hour, category) => {
   const events = store.getters["calendar/getEventsByDate"](props.date, props.location);
   return events.some(
@@ -85,7 +80,6 @@ const hasEvent = (hour, category) => {
   );
 };
 
-// Поиск события по времени и категории
 const findEvent = (hour, category) => {
   const events = store.getters["calendar/getEventsByDate"](props.date, props.location);
   return events.find(

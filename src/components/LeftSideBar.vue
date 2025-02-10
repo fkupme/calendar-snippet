@@ -31,6 +31,10 @@
 
 <script setup>
 import { shallowRef } from "vue";
+import { useStore } from "vuex";
+
+const store = useStore();
+
 
 const drawer = shallowRef(true);
 const rail = shallowRef(true);
@@ -52,7 +56,7 @@ const items = [
   {
     title: "Создать задачу",
     icon: new URL("@/assets/icons/sidebar-content.svg", import.meta.url).href,
-    action: () => console.log("Create Task"),
+    action: () => store.dispatch('form/toggleForm'),
   },
   {
     title: "Календарь",

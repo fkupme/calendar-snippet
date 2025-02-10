@@ -8,9 +8,11 @@
             <v-btn
               icon
               v-bind="mergeProps(menu, tooltip)"
+							variant="elevated"
+							elevation="3"
             >
               <img
-                src=".././assets/images/logo-left.png"
+                src="/images/logo-left.png"
                 alt="Левый логотип"
                 style="height: 40px"
               />
@@ -40,9 +42,11 @@
             <v-btn
               icon
               v-bind="mergeProps(menu, tooltip)"
+							variant="elevated"
+							elevation="3"
             >
               <img
-                src=".././assets/images/logo-right.png"
+                src="/images/logo-right.png"
                 alt="Правый логотип"
                 style="height: 40px"
               />

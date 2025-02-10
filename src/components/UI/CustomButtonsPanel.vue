@@ -6,7 +6,7 @@
     class="border-md"
     :height="props.height"
     mandatory
-    update-model-value=''
+		variant="flat"
   >
     <template v-for="(label, value) in values" :key="value">
       <v-btn :value="value">
@@ -17,7 +17,7 @@
 </template>
 
 <script setup>
-import { shallowRef, defineProps, defineEmits, watch,} from "vue";
+import { shallowRef, defineEmits, watch,} from "vue";
 
 const props = defineProps({
   height: { type: Number, default: 30 },
