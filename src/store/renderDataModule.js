@@ -37,7 +37,14 @@ import useImageUrl from "@/utils/useImageUrl";
           subtitle: "Oriental",
           value: "oriental-melody-room",
           avatar: useImageUrl(".././assets/images/calendar-panel-dropdown-avatar.png"),
-        }
+        },
+        {
+          id: 6,
+          title: "All Studios",
+          subtitle: "All",
+          value: "all-studios",
+          avatar: useImageUrl(".././assets/images/calendar-panel-dropdown-avatar.png"),
+        },
       ],
     },
     namespaced: true,

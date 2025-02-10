@@ -1,8 +1,7 @@
 <template>
-  <v-date-input
-    v-model="date"
-    :display-value="formattedDate"
-    @update:model-value="updateDate"
+  <v-text-field
+    v-model="formattedDate"
+    readonly
     bg-color="transparent"
     class="border-md"
     style="border-radius: 40px"
@@ -17,8 +16,15 @@
     @click:append="goTo(1)"
     persistent-placeholder
   >
-    </v-date-input
-  >
+    <template #append-inner>
+      <v-date-input
+        v-model="date"
+        @update:model-value="updateDate"
+        hide-details
+        style="display: none"
+      />
+    </template>
+  </v-text-field>
 </template>
 
 <script setup>

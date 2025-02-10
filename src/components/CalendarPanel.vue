@@ -1,5 +1,5 @@
 <template>
-  <v-toolbar tag="div" color="white" height="56">
+  <v-toolbar tag="div" color="white"  elevation="3" style="min-height: 56px;  min-width: 600px;">
     <CustomCardDropdown
       v-model='calendarSettings.location'
       :selected="'music-loft-rehearsal'"
@@ -20,9 +20,9 @@
         :date="calendarSettings.date"
         @update:date="handleDateChange"
       />
-      <v-btn icon="mdi-help" color="secondary"></v-btn>
-      <v-btn icon="mdi-menu" color="secondary"></v-btn>
-      <v-btn icon="mdi-arrow-top-right" color="secondary"></v-btn>
+      <v-btn icon="mdi-help" color="secondary" density="compact" height="32" width="32"></v-btn>
+      <v-btn icon="mdi-menu" color="secondary" density="compact" height="32" width="32"></v-btn>
+      <v-btn icon="mdi-arrow-top-right" color="secondary" density="compact" height="32" width="32"></v-btn>
     </div>
   </v-toolbar>
 </template>
