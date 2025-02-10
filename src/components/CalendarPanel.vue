@@ -1,5 +1,5 @@
 <template>
-  <v-toolbar tag="div" color="white"  elevation="3" style="min-height: 56px;  min-width: 600px;">
+  <v-toolbar tag="div" color="white"  elevation="3">
     <CustomCardDropdown
       v-model='calendarSettings.location'
       :selected="'music-loft-rehearsal'"
@@ -68,6 +68,8 @@ watch(calendarSettings, (newSettings) => {
   padding-block-start: 20px;
   background-color: white;
   border-radius: 10px 10px 0 0;
+  min-height: 56px;
+  min-width: 600px;
 }
 
 .v-btn {

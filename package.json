@@ -9,8 +9,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@date-io/date-fns": "^3.2.0",
+    "@date-io/dayjs": "^3.2.0",
     "@mdi/font": "7.4.47",
     "@vueuse/core": "^12.5.0",
+    "date-fns": "^3.6.0",
     "maska": "^3.1.0",
     "roboto-fontface": "*",
     "vue": "^3.4.31",

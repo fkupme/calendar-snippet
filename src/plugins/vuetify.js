@@ -2,6 +2,8 @@ import "@mdi/font/css/materialdesignicons.css";
 import "vuetify/styles";
 import { createVuetify } from "vuetify";
 import { VCalendar, VDateInput } from "vuetify/labs/components";
+import DateFnsAdapter from "@date-io/date-fns";
+import { ru } from 'date-fns/locale'
 
 const myCustomLightTheme = {
   dark: false,
@@ -57,6 +59,12 @@ export default createVuetify({
   defaults:{
     global:{
       fontFamily: '"Inter", sans-serif',
+    }
+  },
+  date:{
+    adapter: DateFnsAdapter,
+    locale: {
+      ru: ru
     }
   }
 });

@@ -1,6 +1,5 @@
 <template>
   <v-navigation-drawer
-    absolute
     :order='0'
     width='180'
     style="bottom: auto; top: auto; height: auto;"
@@ -8,6 +7,7 @@
     elevation="3"
     :rail="rail"
     permanent
+    temporary
   >
     <v-list dense nav>
       <v-list-item
@@ -22,7 +22,7 @@
         <v-list-item-title v-if="!rail">{{ item.title }}</v-list-item-title>
       </v-list-item>
 
-      <v-list-item :slim='true' @click="toggleRail">
+      <v-list-item class="d-flex" :class='"justify-end"?? rail' :slim='true' @click="toggleRail">
         <v-icon>{{ rail ? "mdi-chevron-right" : "mdi-chevron-left" }}</v-icon>
       </v-list-item>
     </v-list>

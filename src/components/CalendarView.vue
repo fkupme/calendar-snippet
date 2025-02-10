@@ -85,7 +85,9 @@ const settings = computed(() => store.state.calendar.calendarState);
 	display: flex;
 	flex-direction: column;
 	background-color: #fff;
-	padding: 20px;
+	padding: 1.25rem;
+  border-radius: 10px;
+  margin-block-end: auto;
 }
 .calendar__legend { 
 	padding-top: 16px;

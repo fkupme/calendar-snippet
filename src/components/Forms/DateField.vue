@@ -1,3 +1,32 @@
+<template>
+  <v-menu
+    v-model="menu"
+    :close-on-content-click="false"
+    transition="scale-transition"
+    min-width="auto"
+    origin='overlap'
+  >
+    <template v-slot:activator="{ props }">
+      <v-text-field
+        v-bind="props"
+        :model-value="date ? date.toLocaleDateString() : ''"
+        :label="label"
+        readonly
+        clearable
+        @click:clear="updateDate(null)"
+        variant="solo"
+        density="comfortable"
+        hide-details
+        placeholder="Выберите дату"
+      />
+    </template>
+    <v-date-picker
+      v-model="date"
+      @update:model-value="updateDate"
+      @click:cancel="menu = false"
+    />
+  </v-menu>
+</template>
 <script setup>
 import { ref, watch } from 'vue'
 
@@ -48,34 +77,3 @@ function updateDate(newDate) {
   menu.value = false
 }
 </script>
-
-<template>
-  <v-menu
-    v-model="menu"
-    :close-on-content-click="false"
-    transition="scale-transition"
-    min-width="auto"
-  >
-    <template v-slot:activator="{ props }">
-      <v-text-field
-        v-bind="props"
-        :model-value="date ? date.toLocaleDateString() : ''"
-        :label="label"
-        readonly
-        clearable
-        @click:clear="updateDate(null)"
-				variant="solo"
-				density="comfortable"
-				hide-details
-				placeholder="Выберите дату"
-      />
-    </template>
-    <v-date-picker
-
-      v-model="date"
-      @update:model-value="updateDate"
-      no-title
-      @click:cancel="menu = false"
-    />
-  </v-menu>
-</template>
