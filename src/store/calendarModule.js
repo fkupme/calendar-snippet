@@ -1,5 +1,3 @@
-import useImageUrl from "@/utils/useImageUrl"
-
 const calendarModule = {
 	state: {
 		calendarState: {},

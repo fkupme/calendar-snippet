@@ -1,6 +1,5 @@
 <template>
   <div class="calendar-day">
-    <!-- Заголовок -->
     <v-row class="ma-0" no-gutters>
       <v-col cols="1" class="time-header"></v-col>
       <v-col
