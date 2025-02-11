@@ -40,7 +40,5 @@ import NewOrderForm from "./forms/NewOrderForm";
     grid-column: 1 / span 8;
     grid-row: 1 / span 2;
   }
-  &-right-sidebar {
-  }
 }
 </style>
