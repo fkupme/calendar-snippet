@@ -46,45 +46,54 @@ const props = defineProps({
     type: String,
     default: "",
   },
+  start: {
+    type: Boolean,
+    default: false,
+  },
+  end: {
+    type: Boolean,
+    default: false,
+  },
 });
+
 const emit = defineEmits(["update:modelValue"]);
 
 const menu = ref(false);
 const date = ref(null);
 
+// Форматирование даты для поля ввода
 const formattedDateForField = computed(() => {
   if (!date.value) return "";
-  const d = new Date(date.value);
-  return d.toLocaleString('ru-RU', {
-    weekday: 'short',
-    day: '2-digit',
-    month: 'long'
-  }).replace('.', ',');
-});
 
-// Форматирование месяца для заголовка календаря
-const formattedMonth = computed(() => {
-  if (!date.value) {
-    const now = new Date();
-    return now.toLocaleString('ru-RU', { month: 'long', year: 'numeric' });
+  const d = new Date(date.value);
+
+  // Если передан параметр start
+  if (props.start) {
+    return `С ${d.toLocaleString("ru-RU", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    })}`;
   }
-  const d = new Date(date.value);
-  return d.toLocaleString('ru-RU', { month: 'long', year: 'numeric' });
+
+  // Если передан параметр end
+  if (props.end) {
+    return `По ${d.toLocaleString("ru-RU", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    })}`;
+  }
+
+  // По умолчанию (если start и end не переданы)
+  return d.toLocaleString("ru-RU", {
+    weekday: "short",
+    day: "2-digit",
+    month: "long",
+  }).replace(".", ",");
 });
 
-// Функции навигации по месяцам
-function previousMonth() {
-  const d = date.value ? new Date(date.value) : new Date();
-  d.setMonth(d.getMonth() - 1);
-  date.value = d.toISOString().split('T')[0];
-}
-
-function nextMonth() {
-  const d = date.value ? new Date(date.value) : new Date();
-  d.setMonth(d.getMonth() + 1);
-  date.value = d.toISOString().split('T')[0];
-}
-
+// Синхронизация с внешним значением modelValue
 watch(
   () => props.modelValue,
   (newVal) => {
@@ -101,6 +110,7 @@ watch(
   { immediate: true }
 );
 
+// Обновление даты и отправка события в родительский компонент
 function updateDate(newDate) {
   if (!newDate) {
     date.value = null;
@@ -122,32 +132,26 @@ function updateDate(newDate) {
 :deep(.v-date-picker) {
   background: white;
   box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
-
   .date-header {
     border-bottom: 1px solid #e0e0e0;
     display: flex;
     align-items: center;
     justify-content: space-between;
-
     .v-btn--icon {
       background: transparent;
       color: rgba(0, 0, 0, 0.87);
-
       &:hover {
         background: transparent;
       }
     }
   }
-
   .v-date-picker-month__day {
     border: none;
     border-radius: 4px;
-
     &--selected {
       background: black;
       color: white;
     }
-
     &:hover:not(&--selected) {
       background-color: #f5f5f5;
     }

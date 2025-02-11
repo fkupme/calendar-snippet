@@ -13,12 +13,6 @@
       </v-col>
     </v-row>
   </v-container>
-  <!-- <div class="container layout">
-    <LeftSidebar class="layout-left-sidebar" />
-    <NewOrderForm class="layout-form" />
-    <CalendarView class="layout-calendar" />
-    <RightSidebar class="layout-right-sidebar" />
-  </div> -->
 </template>
 
 <script setup>

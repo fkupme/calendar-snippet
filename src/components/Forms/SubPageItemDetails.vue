@@ -4,7 +4,7 @@
     location="right"
     temporary
     width="400"
-    style='z-index: 9999;'
+    style='z-index: 9999; top: 0; height: 100%;'
   >
     <!-- Заголовок и кнопка -->
     <v-toolbar flat class="px-4">

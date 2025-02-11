@@ -1,6 +1,6 @@
 <template>
   <v-card class="requests-panel pa-4">
-    <div class="request-panel-top">
+    <div class="request-panel-top d-flex flex-nowrap">
       <CustomButtonsPanel
         :values="{
           new: 'Новая',
@@ -10,11 +10,11 @@
         @update:selectedView="handleFilterChange"
         v-model:selectedView="filterParameter"
       />
-      <v-btn 
-        icon="mdi-arrow-top-right" 
-        color="primary" 
-        density="compact" 
-        height="32" 
+      <v-btn
+        icon="mdi-arrow-top-right"
+        color="primary"
+        density="compact"
+        height="32"
         width="32"
       />
     </div>
@@ -41,33 +41,33 @@
               </div>
               <div class="text-right d-flex flex-column justify-space-between">
                 <div class="fs-12">{{ request.time }}</div>
-                <div class="d-flex gap-2 mt-4">
-                  <v-btn 
-                    variant="outlined" 
-                    color="primary" 
-                    class="text-button font-weight-medium fs-12" 
+                <div class="d-flex ga-2 mt-4">
+                  <v-btn
+                    variant="outlined"
+                    color="primary"
+                    class="text-button flex-1-1-0 font-weight-medium fs-10"
                     size="small"
                     @click="declineRequest(request.id)"
-										:disabled="request.status === 'processed'"
+                    :disabled="request.status === 'processed'"
                   >
                     Отклонить
                   </v-btn>
-                  <v-btn 
-                    color="primary" 
-                    class="text-button font-weight-medium fs-12" 
+                  <v-btn
+                    color="primary"
+                    class="text-button flex-1-1-0 font-weight-medium fs-12"
                     size="small"
                     @click="acceptRequest(request.id, 'inProgress')"
-										:disabled="request.status === 'processed'"
+                    :disabled="request.status === 'processed'"
                   >
                     В работу
                   </v-btn>
-
                 </div>
               </div>
             </div>
           </v-card-text>
           <v-card-text class="pa-4 pt-0 text-caption text-grey">
-            Заявка будет автоматически отклонена {{ formatExpirationDate(request.expirationDate) }}
+            Заявка будет автоматически отклонена
+            {{ formatExpirationDate(request.expirationDate) }}
           </v-card-text>
         </v-card>
       </template>
@@ -76,17 +76,17 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
-import { useStore } from 'vuex';
-import CustomButtonsPanel from './UI/CustomButtonsPanel.vue';
-import {useDateFormat} from '@vueuse/core';
+import { ref, computed } from "vue";
+import { useStore } from "vuex";
+import CustomButtonsPanel from "./UI/CustomButtonsPanel.vue";
+import { useDateFormat } from "@vueuse/core";
+
 
 const store = useStore();
-const filterParameter = ref('new');
-
+const filterParameter = ref("new");
 
 const filteredRequests = computed(() => {
-  return store.getters['edit/filteredRequests'];
+  return store.getters["edit/filteredRequests"];
 });
 
 const groupedRequests = computed(() => {
@@ -101,27 +101,25 @@ const groupedRequests = computed(() => {
 
 const formatDate = (date) => {
   const dateObj = new Date(date);
-  return useDateFormat(dateObj, 'ddd, DD MMMM');
+  return useDateFormat(dateObj, "ddd, DD MMMM");
 };
 
 const formatExpirationDate = (date) => {
   const dateObj = new Date(date);
-  return useDateFormat(dateObj, 'DD.MM в HH:mm');
+  return useDateFormat(dateObj, "DD.MM в HH:mm");
 };
 
 const handleFilterChange = (filter) => {
   filterParameter.value = filter;
-  store.dispatch('edit/setFilter', filter);
+  store.dispatch("edit/setFilter", filter);
 };
 
 const acceptRequest = (requestId, status) => {
-  store.dispatch('edit/processRequest', {requestId, status});
+  store.dispatch("edit/processRequest", { requestId, status });
 };
 
-
-
 const declineRequest = (requestId) => {
-  store.dispatch('edit/declineRequest', requestId);
+  store.dispatch("edit/declineRequest", requestId);
 };
 </script>
 
@@ -136,16 +134,16 @@ const declineRequest = (requestId) => {
 .request-list {
   max-height: 45vh;
   overflow-y: auto;
-  
+
   &::-webkit-scrollbar {
     width: 6px;
   }
-  
+
   &::-webkit-scrollbar-track {
     background: #f1f1f1;
     border-radius: 3px;
   }
-  
+
   &::-webkit-scrollbar-thumb {
     background: #888;
     border-radius: 3px;
@@ -155,4 +153,5 @@ const declineRequest = (requestId) => {
 .request-card {
   border-radius: 10px;
 }
+
 </style>

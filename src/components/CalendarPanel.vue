@@ -7,7 +7,7 @@
       @update:modelValue="handleLocationChange"
     />
     <v-spacer></v-spacer>
-    <div class="controls-wrapper d-flex align-center">
+    <div class="controls-wrapper d-flex align-center flex-nowrap">
       <CustomButtonsPanel
         v-model="calendarSettings.view"
         :values="{ day: 'Сегодня', week: 'Неделя', month: 'Месяц' }"

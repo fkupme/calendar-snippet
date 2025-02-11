@@ -3,8 +3,6 @@
     <div class="d-flex align-center">
       <v-img
         :src="item.image"
-        width="40"
-        height="40"
         class="rounded mr-3"
       />
       <div>
@@ -32,12 +30,23 @@
 </template>
 
 <script setup>
+import { onBeforeMount } from 'vue'
+
 defineProps({
   item: {
+    type: Object,
+    required: true
+  },
+  quantities:{
     type: Object,
     required: true
   }
 });
 
 defineEmits(['increase', 'decrease']);
+
+onBeforeMount(()=>{
+  console.log('item', item);
+  console.log('quantities', quantities);
+})
 </script>

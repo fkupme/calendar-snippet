@@ -1,5 +1,5 @@
 <template>
-	<v-navigation-drawer v-model="isOpen" location="right" temporary width="400">
+	<v-navigation-drawer v-model="isOpen" location="right" temporary width="400" app>
 		<div class="d-flex justify-space-between align-center pa-4">
 			<span class="text-h6">Новый заказ</span>
 			<div class="d-flex ga-2">
@@ -36,13 +36,15 @@
 					hide-details
 				/>
 
-				<v-text-field
+				<v-select
 					autocomplete="off"
 					v-model="formData.peopleCount"
 					label="Кол-во человек"
+					:items="[1,2,3,4 ]"
 					type="number"
 					variant="solo"
 					density="comfortable"
+          class="flex-grow-1"
 					hide-details
 				/>
 			</div>
@@ -88,14 +90,10 @@
 			/>
 
 			<!-- Промокод -->
-			<v-text-field
-				v-model="formData.promoCode"
-				label="Промокод"
-				variant="solo"
-				density="comfortable"
-				class="mb-4"
-				hide-details
-			/>
+      <SelectPromo
+        v-model="formData.promoCode"
+        :promos="promoCodes"
+      />
 
 			<!-- Повтор -->
 			<v-select
@@ -106,7 +104,12 @@
 				density="comfortable"
 				class="mb-4"
 				hide-details
+        v-if='formData.repeat === "Не повторять"'
 			/>
+      <div v-else class="d-flex gap-2 mb-6"> 
+        <DateField v-model="formData.repeatStartDate" :start='true' />
+        <DateField v-model="formData.repeatEndDate" :end='true' />
+      </div>
 
 			<!-- Цветовые метки -->
 			<div class="d-flex gap-2 mb-6">
@@ -118,7 +121,7 @@
 					size="small"
 					variant="text"
 					@click="formData.color = color"
-					:class="{ border: formData.color === color }"
+					:class="{ selected: formData.color === color }"
 				/>
 			</div>
 
@@ -143,12 +146,14 @@
 </template>
 
 <script setup>
-import { computed, onErrorCaptured, ref } from "vue";
+import { computed, onErrorCaptured, } from "vue";
 import { useStore } from "vuex";
 import { useDateFormat } from "@vueuse/core";
-import DateField from "../forms/DateField";
+import DateField from "./DateField";
 import CustomTimePicker from "../forms/CustomTimePicker";
 import SelectionSubpage from "../forms/SelectionSubpage";  
+import SelectPromo from "../forms/SelectPromo";
+
 const store = useStore();
 
 // Геттеры для данных формы и состояния
@@ -172,6 +177,8 @@ const formattedDate = computed(() => {
 		? useDateFormat(formData.value.date, "DD MMMM", { locales: "ru-RU" }).value
 		: new Date();
 });
+
+const promoCodes = computed(() => store.getters["form/promo"]);
 
 // Константы для селектов
 const workTypes = ["Фотосъемка", "Видеосъемка", "Репетиция"];
@@ -237,7 +244,7 @@ onErrorCaptured((err) => {
 	}
 }
 
-.border {
-	border: 2px solid currentColor !important;
+.selected {
+	transform: scale(1.3);
 }
 </style>

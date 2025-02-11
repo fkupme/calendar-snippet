@@ -7,6 +7,7 @@
     :height="props.height"
     mandatory
 		variant="flat"
+    divided
   >
     <template v-for="(label, value) in values" :key="value">
       <v-btn :value="value">
