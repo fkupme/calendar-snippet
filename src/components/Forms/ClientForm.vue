@@ -49,16 +49,24 @@
                   >{{ item.raw.rating }}</span
                 >
               </div>
-              <div class="d-flex align-center text-caption text-grey">
+              <div class="d-flex align-center text-caption">
                 <div class="d-flex align-center">
-                  <v-icon>mdi-phone</v-icon> {{ item.raw.phone }}
+                  <a class="text-decoration-none no-wrap text-grey" :href="`tel:${item.raw.phone}`">
+										<v-icon>mdi-phone</v-icon> {{ item.raw.phone }}
+									</a>
                 </div>
+
+
                 <span class="mx-2">•</span>
                 <div class="d-flex align-center" v-if="item.raw.email">
-                  <v-icon>mdi-email</v-icon> {{ item.raw.email }}
+                  <a class="text-decoration-none no-wrap text-grey" :href="`mailto:${item.raw.email}`">
+										<v-icon>mdi-email</v-icon> {{ item.raw.email }}
+									</a>
+
                 </div>
               </div>
             </div>
+
           </div>
           <div class="d-flex flex-column  align-center text-caption">
             <div class="client-top d-flex">

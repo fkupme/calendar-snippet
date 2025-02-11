@@ -2,7 +2,7 @@
 	<v-navigation-drawer v-model="isOpen" location="right" temporary width="400">
 		<div class="d-flex justify-space-between align-center pa-4">
 			<span class="text-h6">Новый заказ</span>
-			<div class="d-flex gap-2">
+			<div class="d-flex ga-2">
 				<v-btn
 					icon="mdi-refresh"
 					variant="text"
@@ -17,24 +17,14 @@
 			<ClientForm v-model="formData.client" />
 
 			<!-- Дата и время -->
-			<div class="d-flex gap-4 mb-4">
-				
-
+			<div class="d-flex ga-4 mb-4">
 				<DateField v-model="formData.date" />
-
-
-				<v-text-field
-					v-model="formData.time"
-					label="Время"
-					type="time"
-					variant="solo"
-					density="comfortable"
-					hide-details
-				/>
+				<CustomTimePicker v-model="formData.time" />
 			</div>
 
 			<!-- Вид работ и количество человек -->
-			<div class="d-flex gap-4 mb-4">
+			<div class="d-flex ga-4 mb-4">
+
 				<v-select
 					autocomplete="off"
 					v-model="formData.workType"
@@ -45,6 +35,7 @@
 					class="flex-grow-1"
 					hide-details
 				/>
+
 				<v-text-field
 					autocomplete="off"
 					v-model="formData.peopleCount"
@@ -52,7 +43,6 @@
 					type="number"
 					variant="solo"
 					density="comfortable"
-					style="width: 120px"
 					hide-details
 				/>
 			</div>
@@ -69,50 +59,21 @@
 			/>
 
 			<!-- Оборудование -->
-			<v-expansion-panels
-				variant="accordion"
-				elevation="0"
-				class="mb-4"
-				color="#F6F7F8"
-			>
-				<v-expansion-panel>
-					<v-expansion-panel-title
-						>Добавить оборудование</v-expansion-panel-title
-					>
-					<v-expansion-panel-text>
-						<v-checkbox
-							v-for="item in equipment"
-							:key="item.id"
-							v-model="formData.selectedEquipment"
-							:label="item.name"
-							:value="item.id"
-							hide-details
-						/>
-					</v-expansion-panel-text>
-				</v-expansion-panel>
-			</v-expansion-panels>
+
+			<SelectionSubpage
+				v-model="formData.selectedEquipment"
+				:items="equipment"
+				title="Оборудование"
+				addButtonText="оборудование"
+			/>
 
 			<!-- Услуги -->
-			<v-expansion-panels
-				variant="accordion"
-				elevation="0"
-				class="mb-4"
-				color="#F6F7F8"
-			>
-				<v-expansion-panel>
-					<v-expansion-panel-title>Добавить услугу</v-expansion-panel-title>
-					<v-expansion-panel-text>
-						<v-checkbox
-							v-for="service in services"
-							:key="service.id"
-							v-model="formData.selectedServices"
-							:label="service.name"
-							:value="service.id"
-							hide-details
-						/>
-					</v-expansion-panel-text>
-				</v-expansion-panel>
-			</v-expansion-panels>
+			<SelectionSubpage
+				v-model="formData.selectedServices"
+				:items="services"
+				title="Услуги"
+				addButtonText="услуги"
+			/>
 
 			<!-- Комментарий -->
 			<v-textarea
@@ -182,11 +143,12 @@
 </template>
 
 <script setup>
-import { computed } from "vue";
+import { computed, onErrorCaptured, ref } from "vue";
 import { useStore } from "vuex";
 import { useDateFormat } from "@vueuse/core";
-import { VDateInput } from 'vuetify/labs/components'
-
+import DateField from "../forms/DateField";
+import CustomTimePicker from "../forms/CustomTimePicker";
+import SelectionSubpage from "../forms/SelectionSubpage";  
 const store = useStore();
 
 // Геттеры для данных формы и состояния
@@ -231,9 +193,21 @@ const submitForm = () => {
 	store.dispatch("form/clearFormData");
 	closeForm();
 };
+onErrorCaptured((err) => {
+  console.log(err)
+})
 </script>
 
 <style lang="scss" scoped>
+
+.v-navigation-drawer {
+  overflow-x: hidden;
+}
+:deep(.v-navigation-drawer){
+  overflow-y: auto;
+}
+
+
 .v-navigation-drawer {
 	:deep(.v-navigation-drawer__content) {
 		overflow-y: auto;
