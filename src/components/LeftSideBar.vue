@@ -1,13 +1,12 @@
 <template>
   <v-navigation-drawer
-    :order='0'
-    width='180'
-    style="bottom: auto; top: auto; height: auto;"
+    :width='180'
+    style="bottom: auto; top: auto; height: auto; "
     v-model="drawer"
     elevation="3"
     :rail="rail"
     permanent
-    temporary
+    absolute
   >
     <v-list dense nav>
       <v-list-item

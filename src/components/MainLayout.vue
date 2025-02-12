@@ -4,11 +4,11 @@
     <NewOrderForm />
     <v-row> </v-row>
     <v-row>
-      <v-col cols="9">
+      <v-col :cols="isSideBarHide ? 12 : 9">
         <CalendarView />
       </v-col>
 
-      <v-col cols="3">
+      <v-col :cols="isSideBarHide ? 0 : 3">
         <RightSidebar />
       </v-col>
     </v-row>
@@ -20,25 +20,13 @@ import LeftSidebar from "./LeftSideBar";
 import CalendarView from "./CalendarView";
 import RightSidebar from "./RightSideBar";
 import NewOrderForm from "./forms/NewOrderForm";
-</script>
+import { computed } from "vue";
+import { useWindowSize } from '@vueuse/core'
 
-<style lang="scss" scoped>
-.container {
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  grid-template-rows: 1fr 1fr;
-  gap: 1.25rem;
-  height: calc(100dvh - 60px);
-  margin-block-end: auto;
-}
-.layout {
-  &-form {
-    grid-column: 2 / span 3;
-    grid-row: 1;
-  }
-  &-calendar {
-    grid-column: 1 / span 8;
-    grid-row: 1 / span 2;
-  }
-}
-</style>
+const { width } = useWindowSize();
+
+
+const isSideBarHide = computed(() => width.value <= 1024);
+ 
+
+</script>

@@ -10,14 +10,13 @@
     hide-details
     @update:model-value="update"
   >
-
     <template #item="{ item, props }">
       <div v-bind="props" class="custom-option d-flex align-center">
         <div class="mr-3">
           <img
             :src="item.raw?.avatar || item.avatar"
             alt="Avatar"
-            style="width: 36px; height: 36px; border-radius: 50%;"
+            style="width: 36px; height: 36px; border-radius: 50%"
           />
         </div>
         <div>
@@ -35,11 +34,11 @@
           <img
             :src="item.raw?.avatar || item.avatar"
             alt="Avatar"
-            style="width: 36px; height: 36px; border-radius: 50%;"
+            style="width: 36px; height: 36px; border-radius: 50%"
           />
         </div>
         <div>
-          <div class="text-body-2">{{ item.raw?.title || item.title }}</div>
+          <div class="text-body-2" v-if="!isMediumScreen">{{ item.raw?.title || item.title }}</div>
           <div class="text-subtitle-1">
             {{ item.raw?.subtitle || item.subtitle }}
           </div>
@@ -61,6 +60,10 @@ const props = defineProps({
     type: [String, Number],
     required: false,
   },
+  isMediumScreen:{
+    type: Boolean,
+    default: false,
+  }
 });
 
 const emit = defineEmits(["update:modelValue"]);
@@ -73,7 +76,6 @@ watch(
     selectedValue.value = newValue;
   }
 );
-
 
 const update = (value) => {
   emit("update:modelValue", value);

@@ -33,7 +33,7 @@ const equipment = [
         "ISO 100-25600",
       ],
       text: "Камера Sony A7III - это цифровая зеркальная камера с оптическим зумом, APS-C CMOS матрицей, 24.2 МП, 10 кадров/с и диапазоном чувствительности ISO 100-25600. Она идеально подходит для фотосъемки и видеосъемки.",
-      image: "/images/big-drum.png",
+      image: "/images/big-camera.png",
     },
   },
   {
@@ -51,7 +51,7 @@ const equipment = [
         "вес: 1.5 кг",
       ],
       text: "Штатив Manfrotto - это штатив с оптическим зумом, APS-C CMOS матрицей, 24.2 МП, 10 кадров/с и диапазоном чувствительности ISO 100-25600. Он идеально подходит для фотосъемки и видеосъемки.",
-      image: "/images/big-drum.png",
+      image: "/images/big-tripod.png",
     },
   },
   {
@@ -59,7 +59,7 @@ const equipment = [
     name: "Педаль Pearl 100P",
     price: 100,
     category: "Ударные",
-    image: "/images/drum-pedal.png",
+    image: "/images/pedal.png",
     inStock: 3,
     description: {
       characteristics: [
@@ -68,7 +68,7 @@ const equipment = [
         "Регулируемая пружина",
       ],
       text: "Педаль Pearl 100P - это надежная и прочная педаль для барабанов с плавным ходом и регулируемой пружиной. Идеально подходит для начинающих и профессиональных барабанщиков.",
-      image: "/images/big-drum.png",
+      image: "/images/big-pedal.png",
     },
   },
   {
@@ -76,7 +76,7 @@ const equipment = [
     name: "Педаль Iron Cobra 200",
     price: 100,
     category: "Ударные",
-    image: "/images/drum-pedal.png",
+    image: "/images/pedal.png",
     inStock: 3,
     description: {
       characteristics: [
@@ -85,7 +85,7 @@ const equipment = [
         "Регулируемый угол наклона",
       ],
       text: "Педаль Iron Cobra 200 - это профессиональная педаль для барабанов с высокой точностью и долговечностью. Регулируемый угол наклона позволяет настроить педаль под индивидуальные предпочтения.",
-      image: "/images/big-drum.png",
+      image: "/images/big-pedal.png",
     },
   },
   {
@@ -93,12 +93,12 @@ const equipment = [
     name: "Педаль Yamaha",
     price: 100,
     category: "Ударные",
-    image: "/images/drum-pedal.png",
+    image: "/images/pedal.png",
     inStock: 3,
     description: {
       characteristics: ["Легкий вес", "Простота использования", "Надежность"],
       text: "Педаль Yamaha - это легкая и надежная педаль для барабанов, которая подходит как для начинающих, так и для опытных музыкантов. Простота использования делает ее отличным выбором для любой ударной установки.",
-      image: "/images/big-drum.png",
+      image: "/images/big-pedal.png",
     },
   },
   {
@@ -106,7 +106,7 @@ const equipment = [
     name: "Тарелка Crash",
     price: 200,
     category: "Ударные",
-    image: "/images/crash-cymbal.png",
+    image: "/images/drum-plate.png",
     inStock: 3,
     description: {
       characteristics: [
@@ -123,7 +123,7 @@ const equipment = [
     name: "Тарелка Ride",
     price: 100,
     category: "Ударные",
-    image: "/images/ride-cymbal.png",
+    image: "/images/drum-plate-2.png",
     inStock: 3,
     description: {
       characteristics: [
@@ -140,7 +140,7 @@ const equipment = [
     name: "Тарелка Hi-hat",
     price: 100,
     category: "Ударные",
-    image: "/images/hi-hat-cymbal.png",
+    image: "/images/drum-plate-3.png",
     inStock: 3,
     description: {
       characteristics: ["Компактность", "Четкий звук", "Регулируемая высота"],
@@ -153,7 +153,7 @@ const equipment = [
     name: "Малый барабан Yamaha",
     price: 100,
     category: "Ударные",
-    image: "/images/small-drum.png",
+    image: "/images/drum.png",
     inStock: 3,
     description: {
       characteristics: [
@@ -170,7 +170,7 @@ const equipment = [
     name: "Электронная гитара Kramer Striker",
     price: 100,
     category: "Электрогитары",
-    image: "/images/electric-guitar.png",
+    image: "/images/guitar.png",
     inStock: 1,
     description: {
       characteristics: [

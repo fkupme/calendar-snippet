@@ -5,6 +5,7 @@
       :selected="'music-loft-rehearsal'"
       :items="items"
       @update:modelValue="handleLocationChange"
+      :isMediumScreen="isMediumScreen"
     />
     <v-spacer></v-spacer>
     <div class="controls-wrapper d-flex align-center flex-nowrap">
@@ -13,13 +14,16 @@
         :values="{ day: 'Сегодня', week: 'Неделя', month: 'Месяц' }"
         :selected="calendarSettings.view"
         @update:selectedView="handleViewChange"
+        :isMediumScreen="isMediumScreen"
       />
       <CustomDateInput
         :solo="true"
         :controls="true"
         :date="calendarSettings.date"
         @update:date="handleDateChange"
+        :isMediumScreen="isMediumScreen"
       />
+
       <v-btn icon="mdi-help"  color="secondary" density="compact" height="32" width="32" variant="outlined"></v-btn>
       <v-btn icon="mdi-menu" color="secondary" density="compact" height="32" width="32" variant="outlined"></v-btn>
       <v-btn icon="mdi-arrow-top-right" color="secondary" density="compact" height="32" width="32" variant="outlined"></v-btn>
@@ -29,11 +33,17 @@
 </template>
 
 <script setup>
-import { reactive, watch } from "vue";
+import { reactive, watch, computed } from "vue";
 import CustomButtonsPanel from "@/components/UI/CustomButtonsPanel.vue";
 import CustomCardDropdown from "@/components/UI/CustomCardDropdown.vue";
 import CustomDateInput from "./UI/CustomDateInput.vue";
 import { useStore } from "vuex";
+import { useWindowSize } from '@vueuse/core'
+
+const { width } = useWindowSize();
+
+
+const isMediumScreen = computed(() => width.value > 768 && width.value <= 1200);
 
 const store = useStore();
 const items = store.state.data.studioCards;
