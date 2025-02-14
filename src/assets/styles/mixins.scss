@@ -1,0 +1,7 @@
+@use 'functions' as f;
+
+@mixin responsive-rules($rules, $screenWidth: 1366px) {
+  @each $property, $value in $rules {
+    #{$property}: f.toVW($value, $screenWidth);
+  }
+}

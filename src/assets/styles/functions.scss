@@ -1,0 +1,27 @@
+@use 'sass:math';
+
+@function toVW ($value, $screenWidth: 1366px) {
+
+  @if not $value or math.unit($value) == "" {
+    @error "Значение должно быть в  px.";
+  }
+
+  @if not $screenWidth or math.unit($screenWidth) == "" {
+    @error "Ширина экрана должна быть в px.";
+  }
+
+  $vwValue: calc(($value / $screenWidth) * 100);
+
+  @return $vwValue * 1vw;
+}
+
+@function toVH ($value, $screenHeight: 860px) {
+  @if not $value or math.unit($value) == "" {
+    @error "Значение должно быть в px.";
+  }
+  @if not $screenHeight or math.unit($screenHeight) == "" {
+    @error "Высота экрана должна быть в px.";
+  }
+  $vhValue: calc(($value / $screenHeight) * 100);
+  @return $vhValue * 1dvh;
+}

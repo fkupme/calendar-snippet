@@ -69,6 +69,7 @@
       temporary
       :order="2"
       width="400"
+      style='top:0; height:100%'
     >
       <v-toolbar flat class="px-4">
         <v-btn variant="text" icon="mdi-arrow-left" @click="isOpen = false" />
@@ -201,6 +202,8 @@ const selectedItems = computed({
   get: () => props.modelValue,
   set: (value) => emit("update:modelValue", value),
 });
+
+// дописать вотчер для выбранных элементов и обновления стора
 
 const totalPrice = computed(() => {
   const total = selectedItems.value.reduce((sum, item) => {

@@ -88,7 +88,7 @@ const calendarModule = {
 				start: "2025-02-10T22:00:00",
 				end: "2025-02-10T23:00:00",
 				category: "trash-sound-space",
-				status: "whithout",
+				status: "without",
 				price: 3000,
 				client_id: 7
 			},
@@ -98,7 +98,7 @@ const calendarModule = {
 				start: "2025-02-10T22:00:00",
 				end: "2025-02-10T23:00:00",
 				category: "trash-sound-space",
-				status: "whithout",
+				status: "without",
 				price: 3000,
 				client_id: 8
 			},
@@ -475,9 +475,6 @@ const calendarModule = {
 	getters: {
 
 		getEventsByDate: (state) => (date, location) => {
-
-
-
 			return state.events.filter(event => {
 				const eventDate = new Date(event.start)
 				const targetDate = new Date(date)
@@ -488,7 +485,12 @@ const calendarModule = {
 				return isSameDate && event.category === location
 			})
 		},
+
 		getFilteredClients: (state) => state.filteredClients,
+
+    getClientById: (state) => (id) => {
+      return state.clients.find(client => client.id === id).name;
+    }
 	},
 	namespaced: true,
 

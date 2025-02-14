@@ -10,22 +10,25 @@
     variant="flat"
     @click="handleClick"
   >
-    <v-card-item class="calendar-event__content">
-      <v-card-title class="text-subtitle-2 pb-1">
+    <v-card-item class="calendar-event-text ">
+      <v-card-title class="calendar-event-text__title fs-12">
         {{ formattedTitle }}
       </v-card-title>
-      <v-card-subtitle class="pt-0">
-        <div>{{ formattedTime }}</div>
-        <div v-if="event.price">
+        <div class='calendar-event-text__time fs-9 text-secondary'>{{ formattedTime }}</div>
+        <div class='calendar-event-text__price fs-10' v-if="event.price">
           {{ formatPrice(event.price) }}
         </div>
-      </v-card-subtitle>
+        <div class="icons-panel">
+          <v-icon class="icon" size="12" color="primary">mdi-cellphone</v-icon>
+          <v-icon class="icon" size="12" color="primary">mdi-plus-circle-outline</v-icon>
+         <v-icon class="icon" size="12" color="primary">mdi-message-outline</v-icon>
+        </div>
     </v-card-item>
   </v-card>
 </template>
 
 <script setup>
-import { computed } from 'vue';
+import { computed, onMounted } from 'vue';
 import { useDateFormat } from '@vueuse/core';
 import { useStore } from 'vuex';
 
@@ -86,28 +89,18 @@ const formatPrice = (price) => {
   cursor: pointer;
   transition: all 0.2s ease;
   overflow-y: auto;
+  &-text{
+    line-height: 1;
+    padding: 5px 0 5px 8px;
+    &_title {
+      line-height: 1;
+    }
+
+  }
 
   &:hover {
     transform: scale(1.02);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-
-  &::-webkit-scrollbar {
-    width: 4px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    border-radius: 2px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: #888;
-    border-radius: 2px;
-    
-    &:hover {
-      background: #555;
-    }
   }
 
   &_selected {
@@ -127,7 +120,7 @@ const formatPrice = (price) => {
     }
 
     &-paid_partially {
-      border-image: linear-gradient(to right, #88CA47, #F58628) 1;
+     border-image:  linear-gradient(to right, #88CA47, #F58628) 1;
       border-top: 4px solid ;
     }
 
@@ -135,7 +128,7 @@ const formatPrice = (price) => {
       border-top: 4px solid #000;
     }
 
-    &-whithout {
+    &-without {
       border-top: 4px solid #939292;
     }
   }

@@ -15,7 +15,6 @@
       :close-on-content-click="false"
       location="bottom start"
       attach=".time-picker-wrapper"
-      :offset="[0, 10]"
     >
       <v-card class="time-picker-card pa-4">
         <div class="d-flex align-center gap-4">
@@ -55,7 +54,7 @@
 
 <script setup>
 import { ref, computed, watch } from 'vue';
-
+// дописать disableEndTime и disableStartTime, чтобы нельзя было выбрать время, которое больше или меньше текущего времени
 const props = defineProps({
   modelValue: {
     type: Object,
@@ -85,8 +84,8 @@ watch([startTime, endTime, isFullDay], () => {
 
 watch(isFullDay, (newValue) => {
   if (newValue) {
-    startTime.value = '';
-    endTime.value = '';
+    startTime.value = '09:00';
+    endTime.value = '23:00';
   } else {
     startTime.value = '11:00';
     endTime.value = '12:00';

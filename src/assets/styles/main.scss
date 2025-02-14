@@ -1,8 +1,6 @@
 @use 'reset';
-
 @use 'fonts';
-
-
+@use 'colors';
 
 html {
   overflow-y: auto;
@@ -45,4 +43,9 @@ html {
 
 .v-navigation-drawer::-webkit-scrollbar-thumb:hover {
   background: #555;
+}
+.v-btn{
+  text-transform: none;
+  letter-spacing: 0;
+  line-height: 1.2;
 }

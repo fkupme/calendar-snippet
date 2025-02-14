@@ -1,10 +1,18 @@
 <template>
   <div class="wrapper">
+    <!-- Отображение карточки клиента -->
+    <ClientCard
+      v-if="selectedClient"
+      :client="selectedClient"
+      @edit="enableAutocomplete"
+      class="mb-4"
+    />
+
+    <!-- Отображение автокомплита -->
     <v-autocomplete
-      v-if="!newClient"
-      :model-value="selectedClient"
-      @update:model-value="selectedClient = $event"
-      :label="!selectedClient ? 'Клиент' : ''"
+      v-else
+      v-model="selectedClient"
+      :label="'Клиент'"
       :items="clients"
       :loading="loading"
       :custom-filter="customFilter"
@@ -17,78 +25,7 @@
       item-value="id"
       return-object
       @update:search="fetchClients"
-      :readonly='!!selectedClient'
     >
-      <template #selection="{ item }">
-        <div
-          v-if="item"
-          class="d-flex flex-column align-center justify-space-between w-100"
-        >
-          <div class="d-flex align-center">
-            <v-avatar
-              :text="item.raw.name"
-              size="40"
-              color="grey-lighten-3"
-              class="mr-3"
-            >
-              <v-img
-                :src="
-                  item.raw?.avatar ||
-                  'https://cdn.vuetifyjs.com/images/lists/4.jpg'
-                "
-              />
-            </v-avatar>
-            <div>
-              <div class="d-flex justify-space-between align-center">
-                <span class="text-subtitle-1 font-weight-medium">{{
-                  item.raw.name
-                }}</span>
-                <span
-                  class="text-caption ml-2 text-primary"
-                  v-if="item.raw.rating"
-                  >{{ item.raw.rating }}</span
-                >
-              </div>
-              <div class="d-flex align-center text-caption">
-                <div class="d-flex align-center">
-                  <a class="text-decoration-none no-wrap text-grey" :href="`tel:${item.raw.phone}`">
-										<v-icon>mdi-phone</v-icon> {{ item.raw.phone }}
-									</a>
-                </div>
-
-
-                <span class="mx-2">•</span>
-                <div class="d-flex align-center" v-if="item.raw.email">
-                  <a class="text-decoration-none no-wrap text-grey" :href="`mailto:${item.raw.email}`">
-										<v-icon>mdi-email</v-icon> {{ item.raw.email }}
-									</a>
-
-                </div>
-              </div>
-            </div>
-
-          </div>
-          <div class="d-flex flex-column  align-center text-caption">
-            <div class="client-top d-flex">
-              <span class="color-primary no-wrap" v-if="item.raw.closed"
-                >Завершенные заказы: {{ item.raw.closed }}</span
-              >
-              <span class="color-primary no-wrap" v-if="item.raw.messages"
-                >Сообщений по клиенту: {{ item.raw.messages }}</span
-              >
-            </div>
-            <div class="client-bottom align-baseline d-flex justify-space-between flex-grow-1">
-              <span class="color-primary no-wrap fs-16 font-weight-medium" v-if="item.raw.fee"
-                >Сбор: {{ item.raw.fee }}₽</span
-              >
-              <v-btn @click="enableAutocomplete" key="edit" variant="text" color="secondary" class="fs-9"
-                >Изменить клиента <v-icon>mdi-pencil-outline</v-icon></v-btn
-              >
-            </div>
-          </div>
-        </div>
-      </template>
-
       <template #item="{ item, props: itemProps }">
         <v-list-item v-bind="itemProps">
           <template #title>
@@ -96,13 +33,12 @@
           </template>
           <template #subtitle>
             <div class="d-flex flex-column text-caption">
-              <span>{{ item.raw.raw.phone }}</span>
-              <span class="text-grey">{{ item.raw.raw.email }}</span>
+              <span>{{ item.raw.phone }}</span>
+              <span class="text-grey">{{ item.raw.email }}</span>
             </div>
           </template>
         </v-list-item>
       </template>
-
       <template #append-item>
         <v-list-item class="create-client-btn" @click="createClient">
           <template #prepend>
@@ -114,11 +50,15 @@
         </v-list-item>
       </template>
     </v-autocomplete>
+
+    <!-- Форма регистрации нового клиента -->
     <ClientRegistrationForm
-      v-else
+      v-if="newClient"
       @success="handleClientCreated"
       @cancel="newClient = false"
     />
+
+    <!-- Снекбар для уведомлений -->
     <v-snackbar v-model="snackbar.show" :color="snackbar.color" :timeout="3000">
       {{ snackbar.text }}
     </v-snackbar>
@@ -126,7 +66,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from "vue";
+import { ref, computed, onBeforeMount } from "vue";
 import { useStore } from "vuex";
 import ClientRegistrationForm from "./ClientRegistrationForm";
 
@@ -147,9 +87,9 @@ const createClient = () => {
   newClient.value = true;
 };
 
-const enableAutocomplete = ()=>{
+const enableAutocomplete = () => {
   emit("update:modelValue", null);
-}
+};
 
 const clients = computed(() => {
   return store.getters["calendar/getFilteredClients"].map((client) => ({
@@ -175,7 +115,7 @@ const fetchClients = async (search) => {
   } catch (error) {
     console.log(error);
   }
-};
+}
 const snackbar = ref({
   show: false,
   text: "",
@@ -194,22 +134,59 @@ const handleClientCreated = (client) => {
   newClient.value = false;
 };
 
-onMounted(() => {
+onBeforeMount(() => {
   fetchClients("");
 });
 </script>
 
 <style lang="scss" scoped>
+@use "@/assets/styles/functions" as f;
+
+.wrapper {
+  width: 100%;
+}
+
+.client-card {
+  padding: f.toVH(12px, 1023px) f.toVW(16px, 1023px);
+  border-radius: 8px;
+
+  .v-avatar {
+    flex-shrink: 0;
+  }
+
+  .v-card-text {
+    padding: f.toVH(12px, 1023px) f.toVW(16px, 1023px);
+  }
+
+  .client-top {
+    gap: f.toVW(8px, 1023px);
+  }
+
+  .client-bottom {
+    gap: f.toVW(16px, 1023px);
+  }
+}
+
+.create-client-btn {
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+  padding: f.toVH(12px, 1023px) f.toVW(16px, 1023px);
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.04);
+  }
+
+  .v-icon {
+    margin-right: f.toVW(8px, 1023px);
+    color: rgba(0, 0, 0, 0.6);
+  }
+}
+
 :deep(.v-select__content) {
   .v-list {
     padding: 0;
-  }
-  .custom-scroll {
-    scrollbar-width: thin;
-    scrollbar-color: rgba(0, 0, 0, 0.3) transparent;
 
     &::-webkit-scrollbar {
-      width: 6px;
+      width: f.toVW(6px, 1023px);
     }
 
     &::-webkit-scrollbar-track {
@@ -218,11 +195,11 @@ onMounted(() => {
 
     &::-webkit-scrollbar-thumb {
       background-color: rgba(0, 0, 0, 0.3);
-      border-radius: 3px;
+      border-radius: f.toVW(3px, 1023px);
     }
 
     .v-list-item {
-      padding: 12px 16px;
+      padding: f.toVH(12px, 1023px) f.toVW(16px, 1023px);
       min-height: auto;
 
       &:hover {
@@ -231,27 +208,13 @@ onMounted(() => {
 
       .text-subtitle-1 {
         font-weight: 500;
-        margin-bottom: 4px;
+        margin-bottom: f.toVH(4px, 1023px);
       }
 
       .text-caption {
         color: rgba(0, 0, 0, 0.6);
       }
     }
-  }
-}
-
-.create-client-btn {
-  border-top: 1px solid rgba(0, 0, 0, 0.12);
-  padding: 12px 16px;
-
-  &:hover {
-    background-color: rgba(0, 0, 0, 0.04);
-  }
-
-  .v-icon {
-    margin-right: 8px;
-    color: rgba(0, 0, 0, 0.6);
   }
 }
 </style>

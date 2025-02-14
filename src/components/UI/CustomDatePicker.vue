@@ -1,7 +1,9 @@
 <template>
   <div class="custom-date-picker">
     <div class="date-header d-flex justify-space-between align-center">
-      <span class="month-title fs-16 font-weight-medium">{{ formattedMonth }}</span>
+      <span class="month-title fs-16 font-weight-medium">{{
+        formattedMonth
+      }}</span>
       <v-btn variant="text" icon @click="previousMonth">
         <v-icon>mdi-chevron-left</v-icon>
       </v-btn>
@@ -28,7 +30,6 @@
 <script setup>
 import { ref, watch, computed } from "vue";
 
-
 const props = defineProps({
   modelValue: {
     type: [Date, String],
@@ -36,13 +37,10 @@ const props = defineProps({
   },
 });
 
-
 const emit = defineEmits(["update:modelValue"]);
-
 
 const currentDate = ref(new Date());
 const selectedDate = ref(null);
-
 
 const formattedMonth = computed(() => {
   return currentDate.value.toLocaleString("ru-RU", {
@@ -82,7 +80,6 @@ watch(
   { immediate: true }
 );
 
-
 function selectDate(day) {
   if (!day.date) return;
   selectedDate.value = day.date;
@@ -106,7 +103,7 @@ function previousMonth() {
 
 function nextMonth() {
   const newDate = new Date(currentDate.value);
-  newDate.setMonth(newDate.getMonth() + 1, 1); 
+  newDate.setMonth(newDate.getMonth() + 1, 1);
   currentDate.value = newDate;
 }
 </script>
@@ -158,9 +155,9 @@ function nextMonth() {
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
-.fade-enter-from{
-	opacity: 0;
-	transform: translateY(20px);
+.fade-enter-from {
+  opacity: 0;
+  transform: translateY(20px);
 }
 .fade-leave-to {
   opacity: 0;

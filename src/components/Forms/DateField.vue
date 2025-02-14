@@ -86,11 +86,13 @@ const formattedDateForField = computed(() => {
   }
 
   // По умолчанию (если start и end не переданы)
-  return d.toLocaleString("ru-RU", {
-    weekday: "short",
-    day: "2-digit",
-    month: "long",
-  }).replace(".", ",");
+  return d
+    .toLocaleString("ru-RU", {
+      weekday: "short",
+      day: "2-digit",
+      month: "long",
+    })
+    .replace(".", ",");
 });
 
 // Синхронизация с внешним значением modelValue

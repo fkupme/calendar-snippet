@@ -1,0 +1,59 @@
+@use 'sass:color';
+
+// Background colors
+.bgc-primary {
+  background-color: #F6F7F8;
+}
+.bgc-secondary {
+  background-color: #FFFFFF;
+}
+.bgc-field {
+  background-color: #F5F4F4;
+}
+.bgc-field-active {
+  background-color: #F4F3F3;
+}
+
+// Border colors
+.border-primary {
+  border-color: #EBECED;
+}
+.border-secondary {
+  border-color: #CCCCCC;
+}
+
+// Text colors
+.text-primary {
+  color: #000000;
+}
+.text-secondary {
+  color: #939292;
+}
+
+// Button colors
+// Переменные для цветов
+$primary-color: #252529;
+$secondary-color: #FFFFFF;
+
+// Основные миксины для кнопок
+@mixin button-base($bg-color, $text-color) {
+  background-color: $bg-color;
+  color: $text-color;
+  transition: background-color 0.3s ease-out, color 0.3s ease-out;
+
+  &:hover {
+    background-color: color.adjust($bg-color, $lightness: 10%);
+    color: color.adjust($text-color, $lightness: -10%);
+    transition: background-color 0.3s ease-in, color 0.3s ease-in;
+  }
+}
+
+// Первичная кнопка
+.btn-primary {
+  @include button-base($primary-color, $secondary-color);
+}
+
+// Вторичная кнопка
+.btn-secondary {
+  @include button-base($secondary-color, $primary-color);
+}

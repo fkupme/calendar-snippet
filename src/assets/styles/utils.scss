@@ -1,0 +1,24 @@
+@use 'mixins' as m;
+@use 'sass:color';
+@use 'functions' as f;
+
+.grid-container {
+  display: grid;
+  grid-template-columns: f.toVW(940px) f.toVW(302px);
+  grid-template-rows: auto;
+  padding-block-start: 80px;
+  @include m.responsive-rules((
+    padding-inline-start: 84px,
+    padding-inline-end: 20px,
+    gap: 20px,
+  ), 1366px);
+  @media (max-width: 1024px) {
+    grid-template-columns: repeat(2, 1fr);
+    @include m.responsive-rules((
+      padding-inline-start: 30px,
+      padding-inline-end: 30px,
+      gap: 30px,
+    ), 1024px);
+  }
+}
+

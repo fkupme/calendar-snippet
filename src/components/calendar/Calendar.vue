@@ -1,31 +1,19 @@
 <template>
-  <v-card 
-    :style="cardStyles"
-    class="calendar"
-    elevation="3"
-    :min-width="600"
-		:max-height="620"
-  >
-
-
-    <v-card-text 
-      :style="contentStyles"
-      class="calendar__content pa-0"
-    >
+  <v-card :style="cardStyles" elevation="0" >
+    <v-card-text class="calendar__content pa-0">
       <component
         :is="currentView"
         :date="settings.date"
         :location="settings.location"
       />
-			
     </v-card-text>
   </v-card>
 </template>
 
 <script setup>
-import CalendarDay from "@/components/calendar/CalendarDay.vue";
-import CalendarWeek from "@/components/calendar/CalendarWeek.vue";
-import CalendarMonth from "@/components/calendar/CalendarMonth.vue";
+import CalendarDay from "@/components/calendar/CalendarDay";
+import CalendarWeek from "@/components/calendar/CalendarWeek";
+import CalendarMonth from "@/components/calendar/CalendarMonth";
 import { computed } from "vue";
 
 const props = defineProps({
@@ -36,50 +24,26 @@ const props = defineProps({
 });
 
 const cardStyles = computed(() => ({
-  height: '100%',
-  display: 'flex',
-  flexDirection: 'column',
-}));
-
-const contentStyles = computed(() => ({
-  height: 'calc(100vh - 200px)',
-  overflowY: 'auto',
+  height: "100%",
+  display: "flex",
+  flexDirection: "column",
 }));
 
 const currentView = computed(() => {
-  switch(props.settings.view) {
-    case 'day':
+  switch (props.settings.view) {
+    case "day":
       return CalendarDay;
-    case 'week':
+    case "week":
       return CalendarWeek;
-    case 'month':
+    case "month":
       return CalendarMonth;
     default:
       return CalendarDay;
   }
 });
 </script>
-
 <style lang="scss" scoped>
-.calendar {
-  &__content {
-    &::-webkit-scrollbar {
-      width: 8px;
-    }
-
-    &::-webkit-scrollbar-track {
-      background: #f1f1f1;
-      border-radius: 4px;
-    }
-
-    &::-webkit-scrollbar-thumb {
-      background: #888;
-      border-radius: 4px;
-      
-      &:hover {
-        background: #555;
-      }
-    }
-  }
+.calendar__content {
+  overflow-y: auto;
 }
 </style>

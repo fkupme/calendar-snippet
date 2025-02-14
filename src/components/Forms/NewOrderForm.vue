@@ -171,6 +171,7 @@ const clients = computed(() => store.getters["calendar/clients"]);
 const equipment = computed(() => store.getters["form/equipment"]);
 const services = computed(() => store.getters["form/services"]);
 const totalPrice = computed(() => store.getters["form/totalPrice"]);
+
 // Форматирование даты
 const formattedDate = computed(() => {
 	return formData.value.date

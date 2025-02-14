@@ -9,6 +9,7 @@
     single-line
     hide-details
     @update:model-value="update"
+
   >
     <template #item="{ item, props }">
       <div v-bind="props" class="custom-option d-flex align-center">
@@ -16,12 +17,12 @@
           <img
             :src="item.raw?.avatar || item.avatar"
             alt="Avatar"
-            style="width: 36px; height: 36px; border-radius: 50%"
+            class='avatar'
           />
         </div>
         <div>
-          <div class="text-body-2">{{ item.raw?.title || item.title }}</div>
-          <div class="text-subtitle-1">
+          <div class="fs-12">{{ item.raw?.title || item.title }}</div>
+          <div class="fs-16 font-weight-medium">
             {{ item.raw?.subtitle || item.subtitle }}
           </div>
         </div>
@@ -29,17 +30,17 @@
     </template>
 
     <template #selection="{ item }">
-      <div v-if="item" class="d-flex align-center">
+      <div v-if="item" class="d-flex align-left">
         <div class="mr-3">
           <img
+            class='avatar'
             :src="item.raw?.avatar || item.avatar"
             alt="Avatar"
-            style="width: 36px; height: 36px; border-radius: 50%"
           />
         </div>
         <div>
-          <div class="text-body-2" v-if="!isMediumScreen">{{ item.raw?.title || item.title }}</div>
-          <div class="text-subtitle-1">
+          <div class="fs-12">{{ item.raw?.title || item.title }}</div>
+          <div class="fs-16 font-weight-medium">
             {{ item.raw?.subtitle || item.subtitle }}
           </div>
         </div>
@@ -82,8 +83,22 @@ const update = (value) => {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@use '@/assets/styles/functions' as f;
+
+:deep(.v-field__input){
+  padding-inline-start: 0;
+}
+
+:deep(.v-field__outline){
+  position: static;
+}
+
 .custom-option {
   padding: 8px;
+}
+.avatar {
+  width: f.toVW(36px);
+  border-radius: 50%;
 }
 </style>

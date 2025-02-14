@@ -1,38 +1,61 @@
+@use 'functions' as f;
+
 body, div {
   font-family: 'Inter', sans-serif !important;
+  letter-spacing: normal !important;
 }
 
-
-.body {
-  @media(max-width: 1200px) {
-    font-size: 14px;
-  }
-  @media(max-width: 992px) {
-    font-size: 12px;
+.fs-8{
+  font-size: f.toVW(8px, 1366px);
+  @media (max-width: 1023px) {
+    font-size: f.toVW(8px, 1023px);
   }
 }
+
 
 .fs-9{
-	font-size: 0.5625rem;
+	font-size: f.toVW(9px, 1366px);
+  @media (max-width: 1023px) {
+    font-size: f.toVW(9px, 1023px);
+  }
 }
 
 
 .fs-10{
-	font-size: 0.625rem;
+	font-size: f.toVW(10px, 1366px);
+  @media (max-width: 1023px) {
+    font-size: f.toVW(10px, 1023px);
+  }
 }
 
 
 .fs-12{
-	font-size: 0.75rem;
+	font-size: f.toVW(12px, 1366px);
+  @media (max-width: 1023px) {
+    font-size: f.toVW(12px, 1023px);
+  }
 }
 
 
 .fs-14{
-	font-size: 0.875rem;
+	font-size: f.toVW(14px, 1366px);
+  @media (max-width: 1023px) {
+    font-size: f.toVW(14px, 1023px);
+  }
+}
+
+.fs-15{
+  font-size: f.toVW(15px, 1366px);
+  @media (max-width: 1023px) {
+    font-size: f.toVW(15px, 1023px);
+  }
 }
 
 .fs-16{
-	font-size: 1rem;
+	font-size: f.toVW(16px, 1366px);
+  @media (max-width: 1023px) {
+    font-size: f.toVW(16px, 1023px);
+  }
 }
 
 .no-wrap{

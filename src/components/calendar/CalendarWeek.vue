@@ -7,9 +7,9 @@
         :key="day.date"
         class="day-col"
       >
-        <div class="day-title">
-          <div class="text-subtitle-2">{{ day.dayName }}</div>
-          <div class="text-caption">{{ day.dayNumber }}</div>
+        <div class="day-title ">
+          <div class="fs-15">{{ day.dayName }}</div>
+          <div class="fs-12 text-secondary">{{ day.dayNumber }}</div>
         </div>
       </v-col>
     </v-row>
@@ -21,7 +21,7 @@
         class="ma-0"
         no-gutters
       >
-        <v-col cols="1" class="time-label">
+        <v-col cols="1" class="time-label fs-8 text-secondary bgc-primary">
           {{ formatHour(hour) }}
         </v-col>
 
@@ -30,7 +30,7 @@
           :key="`${hour}-${day.date}`"
           class="day-col"
         >
-          <div class="time-cell">
+          <div class="time-cell bgc-primary">
             <CalendarEvent
               v-if="hasEvent(hour, day.date)"
               :event="findEvent(hour, day.date)"
@@ -69,17 +69,18 @@ const weekDays = computed(() => {
   const currentDate = new Date(props.date);
   const firstDay = new Date(currentDate.setDate(currentDate.getDate() - currentDate.getDay()));
 
-  for (let i = 0; i < 7; i++) {
+  for (let i = 1; i < 8; i++) {
     const date = new Date(firstDay);
     date.setDate(firstDay.getDate() + i);
     days.push({
       date: date.toISOString().split('T')[0],
-      dayName: useDateFormat(date, 'EE').value,
-      dayNumber: useDateFormat(date, 'dd').value
+      dayName: useDateFormat(date, 'dddd').value,
+      dayNumber: useDateFormat(date, 'DD.MM').value
     });
   }
   return days;
 });
+
 
 const formatHour = (hour) => `${hour.toString().padStart(2, '0')}:00`;
 
@@ -105,29 +106,28 @@ const hasEvent = (hour, date) => !!findEvent(hour, date);
 
   .day-col {
     flex: 1;
-    border-left: 1px solid #e0e0e0;
   }
 
   .day-title {
     padding: 12px;
     text-align: center;
-    background: #f5f5f5;
-    border-bottom: 1px solid #e0e0e0;
+    border-bottom: 1px solid #ebeced;
+    div{
+      text-transform: capitalize !important;
+    }
   }
 
   .time-label {
     height: 90px;
     padding: 8px;
-    text-align: right;
-    color: #666;
-    font-size: 12px;
+    text-align: center;
     min-width: 60px;
-    border-right: 1px solid #e0e0e0;
+    border-right: 1px solid #ebeced;
   }
 
   .time-cell {
     height: 90px;
-    border-bottom: 1px solid #e0e0e0;
+    border-bottom: 1px solid #ebeced;
     padding: 2px;
   }
 }

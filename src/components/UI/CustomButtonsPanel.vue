@@ -4,7 +4,6 @@
     v-model="selected"
     @update:model-value="selectView"
     class="border-md button-panel"
-    :height="props.height"
     mandatory
     variant="flat"
     divided
@@ -13,28 +12,27 @@
       v-for="(label, value) in props.values"
       :key="value"
       :value="value"
-      :class="[
-        'button-panel__btn',
-        { 'rounded-full': isMediumScreen && selected !== value },
-        { 'compact-btn': isMediumScreen && selected !== value }
-      ]"
+      class="button-panel__btn font-weight-medium flex-1-1-0"
+      :class='`fs-${props.font}`'
+      :ripple="false"
     >
-      <span v-if="isMediumScreen && selected !== value">{{ label[0] }}</span>
-      <span v-else>{{ label }}</span>
+      {{ label }}
     </v-btn>
   </v-btn-toggle>
 </template>
 
 <script setup>
-import { shallowRef, defineEmits, computed } from "vue";
+import { shallowRef, defineEmits } from "vue";
 
 const props = defineProps({
-  height: { type: Number, default: 30 },
   values: {
     type: Object,
     default: () => ({ day: "Сегодня", week: "Неделя", month: "Месяц" }),
   },
-  isMediumScreen: { type: Boolean, default: false },
+  font: {
+    type: String,
+    default: "14",
+  },
 });
 
 const emit = defineEmits(["update:selectedView"]);
@@ -48,39 +46,38 @@ const selectView = (view) => {
 </script>
 
 <style lang="scss" scoped>
+@use "@/assets/styles/functions" as f;
+
+:deep(.v-btn--size-default){
+  min-width: 0;
+  width: 100%;
+  height: 100%;
+}
+.v-btn-group--density-compact.v-btn-group {
+    height: 100%;
+}
+.v-btn-group--divided .v-btn:not(:last-child) {
+    border-inline-end-style: none;
+    border-inline-end-color: transparent;
+}
 .button-panel {
   border-radius: 40px;
-  min-width: 250px;
-
-  @media (max-width: 1200px) {
-    min-width: 100px;
-  }
+  width: 100%;
 }
 
 .v-btn {
+  border: none;
   border-radius: 40px;
   color: #939292;
   text-transform: none;
   overflow: hidden;
+  padding: f.toVH(4.5px)f.toVW(8px);
   transition: 0.3s ease-in;
 
   &--active {
-    background: #000;
+    background: #252529;
     color: #fff;
     transition: 0.3s ease-in;
-  }
-
-  &.rounded-full {
-    border-radius: 50%;
-  }
-
-  &.compact-btn {
-    min-width: 32px;
-    padding: 0 8px;
-
-    .v-btn__content {
-      justify-content: center;
-    }
   }
 }
 </style>

@@ -5,7 +5,7 @@
       <v-col 
         v-for="day in weekDays" 
         :key="day"
-        class="calendar-month__weekday"
+        class="calendar-month__weekday fs-15"
       >
         {{ day }}
       </v-col>
@@ -22,21 +22,21 @@
         <v-col 
           v-for="day in week" 
           :key="day.date"
-          class="calendar-month__day pa-1"
+          class="calendar-month__day bgc-primary pa-1"
           :class="{ 'calendar-month__day_other-month': !day.isCurrentMonth }"
         >
           <div class="calendar-month__day-header">
-            <span class="calendar-month__day-number">{{ day.dayNumber }}</span>
-            <span v-if="getEventsCount(day.date)" class="calendar-month__events-count">
+            <span class="calendar-month__day-number fs-14 font-weight-medium" >{{ day.dayNumber }}</span>
+            <span v-if="getEventsCount(day.date)" class="calendar-month__events-count fs-12">
               {{ getEventsCount(day.date) }} событий
             </span>
           </div>
           
-          <div class="calendar-month__events">
+          <div class="calendar-month__events fs-12">
             <div 
               v-for="event in getDayEvents(day.date).slice(0, 3)" 
               :key="event.id"
-              class="calendar-month__event"
+              class="calendar-month__event fs-12"
               :class="`calendar-month__event_status-${event.status}`"
             >
               <span class="calendar-month__event-time">
@@ -48,7 +48,7 @@
             </div>
             <div 
               v-if="getDayEvents(day.date).length > 3" 
-              class="calendar-month__more-events"
+              class="calendar-month__more-events fs-11"
             >
               +{{ getDayEvents(day.date).length - 3 }} ещё
             </div>
@@ -77,7 +77,7 @@ const props = defineProps({
 
 const store = useStore();
 
-const weekDays = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
+const weekDays = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'];
 
 const monthGrid = computed(() => {
   const grid = [];
@@ -119,6 +119,7 @@ const formatEventTime = (event) => {
   const startTime = useDateFormat(new Date(event.start), 'HH:mm');
   return startTime.value;
 };
+
 </script>
 
 <style lang="scss" scoped>
@@ -129,18 +130,17 @@ const formatEventTime = (event) => {
   &__weekday {
     padding: 8px;
     text-align: center;
-    background: #f5f5f5;
-    border-bottom: 1px solid #e0e0e0;
-    font-weight: 500;
+    overflow: hidden;
+    white-space: nowrap;
   }
 
   &__day {
-    border: 1px solid #e0e0e0;
+    border: 1px solid #EBECED;
     min-height: 120px;
 		overflow: hidden;
 
     &_other-month {
-      background: #fafafa;
+      background: #cccccc30;
       color: #999;
     }
   }
@@ -152,20 +152,11 @@ const formatEventTime = (event) => {
     margin-bottom: 4px;
   }
 
-  &__day-number {
-    font-size: 14px;
-    font-weight: 500;
-  }
 
   &__events-count {
     background: #e0e0e0;
     border-radius: 10px;
     padding: 2px 6px;
-    font-size: 12px;
-  }
-
-  &__events {
-    font-size: 12px;
   }
 
   &__event {
@@ -178,28 +169,29 @@ const formatEventTime = (event) => {
 
     &_status {
       &-reserved {
-        background-color: #FFF3E0;
-        border-left: 2px solid #F57C00;
+        background-color: #f5882861;
+        border-left: 2px solid #F58628;
       }
 
       &-paid {
-        background-color: #E8F5E9;
-        border-left: 2px solid #4CAF50;
+        background-color: #88ca4752;
+        border-left: 2px solid #88CA47;
       }
 
       &-paid_partially {
-        background-color: #E3F2FD;
-        border-left: 2px solid #2196F3;
+        background: linear-gradient(to right, #88CA47, #F58628) 1;
+        border-image:  linear-gradient(to right, #88CA47, #F58628) 1;
+        border-left: 2px solid;
       }
 
       &-closed {
-        background-color: #EFEBE9;
-        border-left: 2px solid #795548;
+        background-color: #00000060;
+        border-left: 2px solid #000;
       }
 
-      &-whithout {
-        background-color: #FFEBEE;
-        border-left: 2px solid #F44336;
+      &-without {
+        background-color: #939292;
+        border-left: 2px solid #939292;
       }
     }
   }
@@ -210,7 +202,6 @@ const formatEventTime = (event) => {
   }
 
   &__more-events {
-    font-size: 11px;
     color: #666;
     padding: 2px 4px;
   }

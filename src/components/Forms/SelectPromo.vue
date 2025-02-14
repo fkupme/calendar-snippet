@@ -49,8 +49,8 @@
           class="bg-grey-lighten-4"
         />
       </div>
-
-      <!-- Список промокодов -->
+      
+      <!-- СДЕЛАТЬ РАДИО ГРУППУ-->
       <v-list>
         <v-list-item
           v-for="promo in filteredPromos"
@@ -70,6 +70,7 @@
             </div>
           </div>
         </v-list-item>
+        <!-- Добавить кнопку "Применить" в шаблон -->
       </v-list>
     </v-navigation-drawer>
   </div>
@@ -87,11 +88,10 @@ const props = defineProps({
 
 const emit = defineEmits(["update:modelValue"]);
 
-const isOpen = ref(false); // Управляет видимостью drawer
-const searchQuery = ref(""); // Значение поискового запроса
-const selectedPromo = ref(null); // Выбранный промокод
+const isOpen = ref(false);
+const searchQuery = ref("");
+const selectedPromo = ref(null);
 
-// Фильтрация промокодов по поисковому запросу
 const filteredPromos = computed(() => {
   const query = searchQuery.value.toLowerCase();
   return props.promos.filter((promo) =>
@@ -100,17 +100,16 @@ const filteredPromos = computed(() => {
   );
 });
 
-// Выбор промокода
 const selectPromo = (promo) => {
   selectedPromo.value = promo;
-  isOpen.value = false; // Закрываем drawer
-  emit("update:modelValue", promo); // Уведомляем родителя о выборе
+  isOpen.value = false;
+  emit("update:modelValue", promo);
 };
 
-// Очистка выбранного промокода
+
 const clearSelectedPromo = () => {
   selectedPromo.value = null;
-  emit("update:modelValue", null); // Уведомляем родителя о сбросе выбора
+  emit("update:modelValue", null);
 };
 </script>
 

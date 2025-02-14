@@ -1,32 +1,28 @@
 <template>
   <div class="calendar-day">
-    <v-row class="ma-0" no-gutters>
-      <v-col cols="1" class="time-header"></v-col>
-      <v-col
+    <div class="calendar-day__header">
+      <div class="calendar-day__time-header"></div>
+      <div
         v-for="category in categories"
         :key="category.key"
-        class="category-col"
+        class="calendar-day__category"
       >
-        <div class="category-title">{{ category.title }}</div>
-      </v-col>
-    </v-row>
-
-    <div class="time-grid">
-      <v-row
-        v-for="hour in timeSlots"
-        :key="hour"
-        class="ma-0"
-        no-gutters
-      >
-        <v-col cols="1" class="time-label">
+        <div class="calendar-day__category-title fs-15">
+          {{ category.title }}
+        </div>
+      </div>
+    </div>
+    <div class="calendar-day__grid">
+      <div v-for="hour in timeSlots" :key="hour" class="calendar-day__row">
+        <div class="calendar-day__time-label bgc-primary fs-8">
           {{ formatHour(hour) }}
-        </v-col>
-        <v-col
+        </div>
+        <div
           v-for="category in categories"
           :key="`${hour}-${category.key}`"
-          class="category-col"
+          class="calendar-day__cell bgc-primary"
         >
-          <div class="time-cell">
+          <div class="calendar-day__event">
             <CalendarEvent
               v-if="hasEvent(hour, category)"
               :event="findEvent(hour, category)"
@@ -34,8 +30,8 @@
               :show-category="false"
             />
           </div>
-        </v-col>
-      </v-row>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -71,7 +67,10 @@ const categories = [
 const formatHour = (hour) => `${hour.toString().padStart(2, "0")}:00`;
 
 const hasEvent = (hour, category) => {
-  const events = store.getters["calendar/getEventsByDate"](props.date, props.location);
+  const events = store.getters["calendar/getEventsByDate"](
+    props.date,
+    props.location
+  );
   return events.some(
     (event) =>
       new Date(event.start).getHours() === hour &&
@@ -80,7 +79,10 @@ const hasEvent = (hour, category) => {
 };
 
 const findEvent = (hour, category) => {
-  const events = store.getters["calendar/getEventsByDate"](props.date, props.location);
+  const events = store.getters["calendar/getEventsByDate"](
+    props.date,
+    props.location
+  );
   return events.find(
     (event) =>
       new Date(event.start).getHours() === hour &&
@@ -94,40 +96,59 @@ const findEvent = (hour, category) => {
   height: 100%;
   background: white;
 
-  .time-header {
-    min-width: 60px;
-  }
-
-  .category-col {
-    flex: 1;
-    border-left: 1px solid #e0e0e0;
-  }
-
-  .category-title {
-    padding: 12px;
-    text-align: center;
-    background: #f5f5f5;
-    border-bottom: 1px solid #e0e0e0;
-  }
-
-  .time-label {
-    height: 90px;
-    padding: 8px;
-    text-align: right;
-    color: #666;
-    font-size: 12px;
-    min-width: 60px;
-    border-right: 1px solid #e0e0e0;
+  &__header {
     display: flex;
     align-items: center;
-    justify-content: flex-end;
+    border-bottom: 1px solid #ebeced;
   }
 
-  .time-cell {
-    height: 90px;
-    border-bottom: 1px solid #e0e0e0;
+  &__time-header {
+    width: 60px;
+  }
+
+  &__category {
+    flex: 1;
+  }
+
+  &__category-title {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #ebeced;
+  }
+
+  &__grid {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__row {
+    display: flex;
+    align-items: stretch;
+    border-bottom: 1px solid #ebeced;
+  }
+
+  &__time-label {
+    width: 60px;
+    text-align: center;
+    padding: 8px;
+    border-right: 3px solid #ccc;
+  }
+
+  &__cell {
+    flex: 1;
+    height: 70px;
     padding: 2px;
     position: relative;
+    border-left: 1px solid #ebeced;
+  }
+
+  &__event {
+    border-radius: 10px;
+    box-shadow: 2px 4px 50px 0px rgba(0, 0, 0, 0.1);
+    background: rgb(255, 255, 255);
+    &_not-empty {
+      height: 64px;
+    }
   }
 }
 </style>
