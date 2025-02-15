@@ -84,16 +84,32 @@ watch(
 </script>
 
 <style lang="scss" scoped>
-.drawer-content {
+.drawer-wrapper {
   width: 100%;
   height: 100%;
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+.drawer-content {
+  width: clamp(400px, 50%, 600px);
+  margin-inline: auto;
+  max-height: 90vh;
+  overflow-y: auto;
   
   @media (max-width: 1023px) {
     width: clamp(400px, 50%, 600px);
     margin-inline: auto;
-    border-radius: 40px;
+  }
+}
+
+@media (max-width: 1023px){
+   :deep(.drawer-content){
+    width: clamp(400px, 50%, 600px);
+    margin-inline: auto;
   }
 }
 
@@ -106,7 +122,6 @@ watch(
     z-index: 9999;
   }
 }
-
 
 :deep(.v-navigation-drawer__content) {
   overflow-y: auto;

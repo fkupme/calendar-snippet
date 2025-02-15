@@ -323,10 +323,6 @@ const isMaxLimitReached = (item) => {
   const currentCount = getItemCount(item);
   return currentCount >= item.inStock;
 };
-
-onErrorCaptured((e) => {
-  console.error(e);
-});
 </script>
 
 <style lang="scss" scoped>
@@ -335,18 +331,20 @@ onErrorCaptured((e) => {
   height: 100%;
   display: flex;
   justify-content: center;
+  align-items: center;
+  padding: 16px;
+  box-sizing: border-box;
 }
 
 .drawer-content {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
+  width: clamp(400px, 50%, 600px);
+  margin-inline: auto;
+  max-height: 90vh;
+  overflow-y: auto;
   
   @media (max-width: 1023px) {
     width: clamp(400px, 50%, 600px);
     margin-inline: auto;
-    border-radius: 40px;
   }
 }
 
@@ -354,9 +352,9 @@ onErrorCaptured((e) => {
    :deep(.drawer-content){
     width: clamp(400px, 50%, 600px);
     margin-inline: auto;
-    border-radius: 40px;
   }
 }
+
 .v-navigation-drawer {
   overflow-x: hidden;
   

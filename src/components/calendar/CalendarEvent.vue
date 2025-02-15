@@ -90,7 +90,7 @@ const formatPrice = (price) => {
   z-index: 2;
   cursor: pointer;
   transition: all 0.2s ease;
-  overflow-y: auto;
+  overflow-y: hidden;
   &-text{
     line-height: 1;
     padding: 5px 0 5px 8px;

@@ -195,27 +195,33 @@ const confirmPromo = () => {
 :deep(.v-list-item__content) {
   width: 100%;
 }
+
 .drawer-wrapper {
   width: 100%;
   height: 100%;
   display: flex;
   justify-content: center;
-  
-  @media (max-width: 1023px) {
-    padding: 16px;
-  }
+  align-items: center;
+  padding: 16px;
+  box-sizing: border-box;
 }
 
 .drawer-content {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
+  width: clamp(400px, 50%, 600px);
+  margin-inline: auto;
+  max-height: 90vh;
+  overflow-y: auto;
   
   @media (max-width: 1023px) {
     width: clamp(400px, 50%, 600px);
     margin-inline: auto;
-    border-radius: 40px;
+  }
+}
+
+@media (max-width: 1023px){
+   :deep(.drawer-content){
+    width: clamp(400px, 50%, 600px);
+    margin-inline: auto;
   }
 }
 
@@ -293,5 +299,13 @@ const confirmPromo = () => {
 
 .item-list {
   border-radius: 20px;
+}
+
+.item-row {
+  cursor: pointer;
+  
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.04);
+  }
 }
 </style>
