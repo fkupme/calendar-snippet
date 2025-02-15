@@ -90,10 +90,6 @@ watch(
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-  
-  @media (max-width: 1023px) {
-    padding: 16px;
-  }
 }
 
 .drawer-content {
