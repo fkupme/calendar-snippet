@@ -86,6 +86,8 @@ const formatPrice = (price) => {
 .calendar-event {
   height: 100%;
   min-height: 56px;
+  position: relative;
+  z-index: 2;
   cursor: pointer;
   transition: all 0.2s ease;
   overflow-y: auto;

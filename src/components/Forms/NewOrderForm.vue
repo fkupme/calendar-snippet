@@ -255,16 +255,20 @@ onErrorCaptured((err) => {
 .work-details {
   .work-type, .people-count {
     flex: 0 0 calc(50% - 8px);
-    width: calc(50% - 8px);
-    min-width: f.toVW(228px, 1023px);
+    width: f.toVW(150px, 1366px);
+    @media (max-width: 1023px) {
+      width: f.toVW(220px, 1023px);
+    }
   }
 }
 
 .date-time {
   .date-time__field {
     flex: 0 0 calc(50% - 8px);
-    width: calc(50% - 8px);
-    min-width: f.toVW(228px, 1023px);
+    width: f.toVW(150px, 1366px);
+    @media (max-width: 1023px) {
+      width: f.toVW(220px, 1023px);
+    }
   }
 }
 
