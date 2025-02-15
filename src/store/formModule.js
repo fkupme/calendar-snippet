@@ -373,13 +373,29 @@ const promos = [
      description: 'Корректировка ошибки диспетчера',
   },
   {
-     promo: 'MKVDLGNBSAC3A0',
+     promo: 'MKVDLGNBDVVDESAC3A0',
      time: '-20%',
      pos: '-10%',
      source: 'Внутренний',
      description: 'Корректировка ошибки диспетчера',
 
-  }
+  },
+  {
+     promo: 'MKVDLGNVDVDBSAC3A0',
+     time: '-20%',
+     pos: '-10%',
+     source: 'Внутренний',
+     description: 'Корректировка ошибки диспетчера',
+
+  },
+  {
+     promo: 'MKVDLGBFBNBSAC3A0',
+     time: '-20%',
+     pos: '-10%',
+     source: 'Внутренний',
+     description: 'Корректировка ошибки диспетчера',
+
+  },
 
 ];
 

@@ -211,8 +211,7 @@ const confirmPromo = () => {
 .drawer-content {
   width: clamp(400px, 50%, 600px);
   margin-inline: auto;
-  height: 100%;
-  overflow-y: auto;
+  height: calc(100dvh - 60px);
   display: flex;
   flex-direction: column;
   
@@ -222,10 +221,18 @@ const confirmPromo = () => {
   }
 }
 
-@media (max-width: 1023px){
-   :deep(.drawer-content){
-    width: clamp(400px, 50%, 600px);
-    margin-inline: auto;
+:deep(.v-list) {
+  flex: 1;
+  overflow-y: auto;
+  
+  &::-webkit-scrollbar {
+    width: 6px;
+    
+    &-track { background: #f1f1f1; }
+    &-thumb { 
+      background: #888;
+      border-radius: 3px;
+    }
   }
 }
 
@@ -240,17 +247,7 @@ const confirmPromo = () => {
 }
 
 :deep(.v-navigation-drawer__content) {
-  overflow-y: auto;
-  
-  &::-webkit-scrollbar {
-    width: 6px;
-    
-    &-track { background: #f1f1f1; }
-    &-thumb { 
-      background: #888;
-      border-radius: 3px;
-    }
-  }
+  overflow-y: hidden;
 }
 
 .search-field {

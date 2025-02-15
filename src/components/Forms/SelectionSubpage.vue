@@ -328,48 +328,27 @@ const isMaxLimitReached = (item) => {
 <style lang="scss" scoped>
 .drawer-wrapper {
   width: 100%;
-  height: 100vh;
+  height: calc(100dvh - 60px);
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-  
-  @media (max-width: 1023px) {
-    padding: 16px;
-  }
 }
 
 .drawer-content {
   width: clamp(400px, 50%, 600px);
   margin-inline: auto;
   height: 100%;
-  overflow-y: auto;
   display: flex;
   flex-direction: column;
   
   @media (max-width: 1023px) {
     width: clamp(400px, 50%, 600px);
     margin-inline: auto;
-  }
+  }   
 }
 
-@media (max-width: 1023px){
-   :deep(.drawer-content){
-    width: clamp(400px, 50%, 600px);
-    margin-inline: auto;
-  }
-}
-
-.v-navigation-drawer {
-  overflow-x: hidden;
-  
-  @media (max-width: 1023px) { 
-    width: 100% !important; 
-    max-width: 100vw;
-    z-index: 9999;
-  }
-}
-
-:deep(.v-navigation-drawer__content) {
+:deep(.v-list) {
+  flex: 1;
   overflow-y: auto;
   
   &::-webkit-scrollbar {
@@ -380,6 +359,16 @@ const isMaxLimitReached = (item) => {
       background: #888;
       border-radius: 3px;
     }
+  }
+}
+
+.v-navigation-drawer {
+  overflow-x: hidden;
+  
+  @media (max-width: 1023px) { 
+    width: 100% !important; 
+    max-width: 100vw;
+    z-index: 9999;
   }
 }
 

@@ -3,7 +3,7 @@
 		<div class="form-wrapper bgc-primary">
       <div class="form-content bgc-secondary">
 
-        <div class="d-flex justify-space-between align-center pa-4">
+        <div class="d-flex justify-space-between align-center ml-4">
           <span class="fs-20 font-weight-medium">Новый заказ</span>
           <div class="d-flex ga-2">
             <v-btn color="#ccc" icon="mdi-close-circle" variant="text" @click="closeForm" />
@@ -205,22 +205,46 @@ onErrorCaptured((err) => {
 
 <style lang="scss" scoped>
 @use "@/assets/styles/functions" as f;
+.form-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
 .form-content {
+  width: clamp(400px, 50%, 600px);
+  margin-inline: auto;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  
   @media (max-width: 1023px) {
     width: clamp(400px, 50%, 600px);
     margin-inline: auto;
+    overflow-y: auto;
+    
+    &::-webkit-scrollbar {
+      width: 6px;
+      
+      &-track { background: #f1f1f1; }
+      &-thumb { 
+        background: #888;
+        border-radius: 3px;
+      }
+    }
   }
-  
 }
 
 .v-navigation-drawer {
   overflow-x: hidden;
+  height: calc(100dvh - 60px);
   
   @media (max-width: 1023px) { 
     width: 100% !important; 
     max-width: 100vw;
     z-index: 9999;
-    min-height: 100dvh;
   }
 }
 

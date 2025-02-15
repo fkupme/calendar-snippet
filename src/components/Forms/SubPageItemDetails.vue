@@ -29,7 +29,7 @@
         <div class="pa-4">
           
           <div class="fs-18 font-weight-medium">Основные характеристики</div>
-          <v-list density="compact">
+          <v-list density="compact" style="flex: 1; overflow-y: auto;">
             <v-list-item 
               v-for="(spec, index) in item?.description.characteristics" 
               :key="index"
@@ -86,7 +86,7 @@ watch(
 <style lang="scss" scoped>
 .drawer-wrapper {
   width: 100%;
-  height: 100vh;
+  height: calc(100dvh - 60px);
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
@@ -100,7 +100,6 @@ watch(
   width: clamp(400px, 50%, 600px);
   margin-inline: auto;
   height: 100%;
-  overflow-y: auto;
   display: flex;
   flex-direction: column;
   
@@ -110,24 +109,8 @@ watch(
   }
 }
 
-@media (max-width: 1023px){
-   :deep(.drawer-content){
-    width: clamp(400px, 50%, 600px);
-    margin-inline: auto;
-  }
-}
-
-.v-navigation-drawer {
-  overflow-x: hidden;
-  
-  @media (max-width: 1023px) { 
-    width: 100% !important; 
-    max-width: 100vw;
-    z-index: 9999;
-  }
-}
-
-:deep(.v-navigation-drawer__content) {
+:deep(.v-list) {
+  flex: 1;
   overflow-y: auto;
   
   &::-webkit-scrollbar {
@@ -138,6 +121,16 @@ watch(
       background: #888;
       border-radius: 3px;
     }
+  }
+}
+
+.v-navigation-drawer {
+  overflow-x: hidden;
+  
+  @media (max-width: 1023px) { 
+    width: 100% !important; 
+    max-width: 100vw;
+    z-index: 9999;
   }
 }
 
