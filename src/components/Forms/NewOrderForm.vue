@@ -220,6 +220,7 @@ onErrorCaptured((err) => {
     width: 100% !important; 
     max-width: 100vw;
     z-index: 9999;
+    min-height: 100dvh;
   }
 }
 

@@ -86,19 +86,23 @@ watch(
 <style lang="scss" scoped>
 .drawer-wrapper {
   width: 100%;
-  height: 100%;
+  height: 100vh;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 16px;
+  flex-direction: column;
   box-sizing: border-box;
+  
+  @media (max-width: 1023px) {
+    padding: 16px;
+  }
 }
 
 .drawer-content {
   width: clamp(400px, 50%, 600px);
   margin-inline: auto;
-  max-height: 90vh;
+  height: 100%;
   overflow-y: auto;
+  display: flex;
+  flex-direction: column;
   
   @media (max-width: 1023px) {
     width: clamp(400px, 50%, 600px);
@@ -140,7 +144,7 @@ watch(
 .item-image {
   margin-inline: auto;
   border-radius: 0 0 40px 40px;
-  object-fit: contain;
+  object-fit: scale-down;
   width: 176px;
 }
 </style>
