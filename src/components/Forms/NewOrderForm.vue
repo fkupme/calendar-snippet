@@ -94,7 +94,7 @@
             hide-details
                 v-if='formData.repeat === "Не повторять"'
           />
-              <div v-else class="d-flex gap-2 mb-6">
+              <div v-else class="d-flex ga-4 mb-6">
                 <DateField v-model="formData.repeatStartDate" :start='true' />
                 <DateField v-model="formData.repeatEndDate" :end='true' />
               </div>
@@ -206,9 +206,11 @@ onErrorCaptured((err) => {
 <style lang="scss" scoped>
 @use "@/assets/styles/functions" as f;
 .form-content {
-  width: clamp(400px, 50%, 600px);
-  margin-inline: auto;
-  border-radius: 40px;
+  @media (max-width: 1023px) {
+    width: clamp(400px, 50%, 600px);
+    margin-inline: auto;
+  }
+  
 }
 
 .v-navigation-drawer {

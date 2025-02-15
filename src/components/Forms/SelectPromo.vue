@@ -200,35 +200,52 @@ const confirmPromo = () => {
   height: 100%;
   display: flex;
   justify-content: center;
-  align-items: center;
-  padding: 16px;
-  box-sizing: border-box;
+  
+  @media (max-width: 1023px) {
+    padding: 16px;
+  }
 }
 
 .drawer-content {
-  width: clamp(400px, 50%, 600px);
-  margin-inline: auto;
-  border-radius: 40px;
-  max-height: 90vh;
+  width: 100%;
   height: 100%;
-  overflow-y: auto;
   display: flex;
   flex-direction: column;
+  
+  @media (max-width: 1023px) {
+    width: clamp(400px, 50%, 600px);
+    margin-inline: auto;
+    border-radius: 40px;
+  }
+}
+
+.v-navigation-drawer {
+  overflow-x: hidden;
+  
+  @media (max-width: 1023px) { 
+    width: 100% !important; 
+    max-width: 100vw;
+    z-index: 9999;
+  }
+}
+
+:deep(.v-navigation-drawer__content) {
+  overflow-y: auto;
+  
+  &::-webkit-scrollbar {
+    width: 6px;
+    
+    &-track { background: #f1f1f1; }
+    &-thumb { 
+      background: #888;
+      border-radius: 3px;
+    }
+  }
 }
 
 .search-field {
   border-radius: 12px;
   overflow: hidden;
-}
-
-.v-navigation-drawer {
-  overflow-x: hidden;
-
-  @media (max-width: 1023px) {
-    width: 100% !important;
-    max-width: 100vw;
-    z-index: 9999;
-  }
 }
 
 .promo-item {
