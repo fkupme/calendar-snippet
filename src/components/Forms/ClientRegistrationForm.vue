@@ -77,18 +77,28 @@ const errors = reactive({
   email: "",
 });
 
+const validateName = (value) => {
+  if (!value) return 'Имя обязательно'
+  const nameRegex = /^[А-ЯЁ][а-яё]+(-[А-ЯЁ][а-яё]+)?$/
+  if (!nameRegex.test(value)) return 'Введите корректное имя на русском'
+  return true
+}
+
+const validatePhone = (value) => {
+  if (!value) return 'Телефон обязателен'
+  const phoneRegex = /^(\+7|8)\s?\(?\d{3}\)?[-\s]?\d{3}[-\s]?\d{2}[-\s]?\d{2}$/
+  if (!phoneRegex.test(value)) return 'Введите корректный номер телефона'
+  return true
+}
+
 const validateForm = () => {
   let isValid = true;
 
-  if (!formData.name.trim()) {
-    errors.name = "Имя обязательно";
-    isValid = false;
-  }
+  errors.name = validateName(formData.name)
+  if (errors.name !== true) isValid = false
 
-  if (!formData.phone.trim()) {
-    errors.phone = "Телефон обязателен";
-    isValid = false;
-  }
+  errors.phone = validatePhone(formData.phone)
+  if (errors.phone !== true) isValid = false
 
   if (
     formData.email &&

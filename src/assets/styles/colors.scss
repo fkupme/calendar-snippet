@@ -1,6 +1,5 @@
 @use 'sass:color';
 
-// Background colors
 .bgc-primary {
   background-color: #F6F7F8;
 }
@@ -14,7 +13,7 @@
   background-color: #F4F3F3;
 }
 
-// Border colors
+
 .border-primary {
   border-color: #EBECED;
 }
@@ -22,7 +21,7 @@
   border-color: #CCCCCC;
 }
 
-// Text colors
+
 .text-primary {
   color: #000000;
 }
@@ -30,30 +29,68 @@
   color: #939292;
 }
 
-// Button colors
-// Переменные для цветов
+
 $primary-color: #252529;
 $secondary-color: #FFFFFF;
 
-// Основные миксины для кнопок
-@mixin button-base($bg-color, $text-color) {
-  background-color: $bg-color;
-  color: $text-color;
-  transition: background-color 0.3s ease-out, color 0.3s ease-out;
+// для инпута
+@mixin input-states {
+  border-radius: 8px;
+  @extend .bgc-field;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
 
   &:hover {
-    background-color: color.adjust($bg-color, $lightness: 10%);
-    color: color.adjust($text-color, $lightness: -10%);
-    transition: background-color 0.3s ease-in, color 0.3s ease-in;
+   @extend .bgc-field-active;
+  }
+
+  &.v-field--focused,
+  &:focus-within {
+    @extend .bgc-field-active;
+    box-shadow: 0 0 0 2px #1976D2;
   }
 }
 
-// Первичная кнопка
-.btn-primary {
-  @include button-base($primary-color, $secondary-color);
+// для иконок инпута
+@mixin input-icon {
+  color: #757575;
+  opacity: 0.7;
+  transition: opacity 0.3s ease, color 0.3s ease;
+  cursor: pointer;
+  &:hover {
+    opacity: 1;
+    color: #1976D2;
+  }
 }
 
-// Вторичная кнопка
+//  для кнопок
+@mixin button-base($bg-color, $text-color) {
+  background-color: $bg-color;
+  color: $text-color;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: color.scale($bg-color, $lightness: -10%);
+  }
+}
+
+
+.btn-primary {
+  @include button-base($primary-color, white);
+}
+
 .btn-secondary {
   @include button-base($secondary-color, $primary-color);
+}
+
+
+.input-hover-focus {
+  @include input-states;
+}
+
+.input-icon-hover {
+  @include input-icon;
 }

@@ -28,7 +28,7 @@
 </template>
 
 <script setup>
-import { computed, onMounted } from 'vue';
+import { computed } from 'vue';
 import { useDateFormat } from '@vueuse/core';
 import { useStore } from 'vuex';
 

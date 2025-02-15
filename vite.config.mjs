@@ -43,6 +43,11 @@ export default defineConfig({
   },
   server: {
     port: 3000,
+    watch: {
+      ignored: ["**/node_modules/**"],
+      usePolling: true, //
+      interval: 100,  //
+    }
   },
   css: {
     preprocessorOptions: {

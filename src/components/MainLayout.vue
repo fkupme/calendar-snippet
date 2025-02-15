@@ -31,7 +31,7 @@ import NewOrderForm from "@/components/forms/NewOrderForm";
 :deep(.request-panel) {
   grid-column: 2;
   grid-row: 1;
-  height: f.toVH(320px);
+  height: f.toVH(360px);
 }
 @media (max-width: 1024px) {
   .calendar{

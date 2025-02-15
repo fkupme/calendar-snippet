@@ -1,15 +1,17 @@
 <template>
   <div class="custom-date-picker">
     <div class="date-header d-flex justify-space-between align-center">
-      <span class="month-title fs-16 font-weight-medium">{{
+      <span class="month-title fs-26 font-weight-medium">{{
         formattedMonth
       }}</span>
-      <v-btn variant="text" icon @click="previousMonth">
-        <v-icon>mdi-chevron-left</v-icon>
-      </v-btn>
-      <v-btn variant="text" icon @click="nextMonth">
-        <v-icon>mdi-chevron-right</v-icon>
-      </v-btn>
+      <div class="date-header__buttons d-none">
+        <v-btn variant="text" icon @click="previousMonth">
+          <v-icon>mdi-chevron-left</v-icon>
+        </v-btn>
+        <v-btn variant="text" icon @click="nextMonth">
+          <v-icon>mdi-chevron-right</v-icon>
+        </v-btn>
+      </div>
     </div>
 
     <transition name="fade" mode="out-in">

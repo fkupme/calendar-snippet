@@ -1,5 +1,5 @@
 <template>
-  <div class="request-panel">
+  <div class="request-panel" v-bind="$attrs">
     <v-card class="request-panel__card card">
       <div class="request-panel__top d-flex flex-nowrap justify-space-between">
         <CustomButtonsPanel
@@ -8,7 +8,7 @@
             inProgress: 'В работе',
             processed: 'Обработано',
           }"
-          :font='12'
+          :font='"12"'
           @update:selectedView="handleFilterChange"
           v-model:selectedView="filterParameter"
         />
@@ -146,6 +146,10 @@ const declineRequest = (requestId) => {
     color: "grey-darken-1",
   };
 };
+
+defineOptions({
+  inheritAttrs: false
+})
 </script>
 
 <style lang="scss" scoped>
@@ -154,13 +158,15 @@ const declineRequest = (requestId) => {
 .request-panel {
   width: 100%;
   margin: 0 auto;
+  margin-bottom: 16px;
 
   &__card {
     margin: 0 auto;
     background: #ffffff;
     border-radius: 20px;
-    padding: 12px;
-
+    padding: 12px 12px 38px; 
+    margin-bottom: 16px;
+    
     @media (max-width: 1023px) {
       padding: f.toVH(12px, 1023px) f.toVW(12px, 1023px);
     }
@@ -207,10 +213,6 @@ const declineRequest = (requestId) => {
       background: #888;
       border-radius: 3px;
     }
-
-    @media (max-width: 1023px) {
-      height: auto;
-    }
   }
 
   &__date-header {
@@ -239,8 +241,8 @@ const declineRequest = (requestId) => {
   }
 
   &__card-caption {
-    padding: 4px 10px;
-    text-align: center;
+    padding: 4px 0 0 52px;
+    text-align: left;
 
     @media (max-width: 1023px) {
       padding: f.toVH(4px, 1023px) f.toVW(10px, 1023px);

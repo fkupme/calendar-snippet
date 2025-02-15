@@ -359,33 +359,27 @@ const services = [
 
 const promos = [
   {
-     promo: 'MKVDL3A0',
-     time: '-10%',
+     promo: 'MKVDLSCACSACA0',
+     time: '-13%',
      pos: '-10%',
      source: 'Внутренний',
      description: 'Корректировка ошибки диспетчера',
   },
   {
-     promo: 'MKVDL3A0',
-     time: '-10%',
+     promo: 'MKVDLSADVDC3A0',
+     time: '-11%',
      pos: '-10%',
      source: 'Внутренний',
      description: 'Корректировка ошибки диспетчера',
   },
   {
-     promo: 'MKVDL3A0',
-     time: '-10%',
+     promo: 'MKVDLGNBSAC3A0',
+     time: '-20%',
      pos: '-10%',
      source: 'Внутренний',
      description: 'Корректировка ошибки диспетчера',
-  },
-  {
-     promo: 'MKVDL3A0',
-     time: '-10%',
-     pos: '-10%',
-     source: 'Внутренний',
-     description: 'Корректировка ошибки диспетчера',
-  },
+
+  }
 
 ];
 

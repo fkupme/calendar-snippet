@@ -4,62 +4,37 @@
       v-if="!selectedItems.length"
       block
       variant="flat"
-      class=" d-inline-flex justify-space-between mb-4 color-grey-lighten-1 bg-grey-lighten-4 enter-button"
+      class="d-inline-flex justify-space-between bgc-field mb-4 text-secondary enter-button"
       @click="isOpen = true"
     >
-      Добавить {{ addButtonText }}
-      <v-icon end>mdi-chevron-right</v-icon>
+      <div>Добавить {{ addButtonText }}</div>
+      <template v-slot:append>
+        <v-icon>mdi-chevron-right</v-icon>
+      </template>
     </v-btn>
 
     <!-- Если есть выбранные элементы - показываем заголовок и список -->
-    <div v-else class="mb-4">
-      <div class="d-flex justify-space-between align-center mb-2">
-        <span class="text-subtitle-1">{{ title }}</span>
-        <span class="text-subtitle-1">{{ totalPrice }}₽</span>
-        <v-btn variant="flat" size="small" @click="isOpen = true">
-          <v-icon>mdi-pencil-outline</v-icon>
-        </v-btn>
+    <div v-else class="item-list mb-2 pa-2 border">
+      <div class="d-flex justify-space-between align-center mb-2 bgc-secondary">
+        <span class="fs-14">{{ title }}</span>
+        <span class="fs-14 font-weight-medium"
+          >{{ totalPrice }}₽
+          <v-btn variant="flat" size="small" @click="isOpen = true">
+            <v-icon>mdi-pencil-outline</v-icon>
+          </v-btn></span
+        >
       </div>
 
       <!-- Список выбранных элементов с счетчиками -->
-      <div
+      <SelectedItem
         v-for="item in selectedItems"
         :key="item.id"
-        class="selected-item pa-2 d-flex align-center justify-space-between bg-grey-lighten-4 rounded mb-2"
-      >
-        <div class="d-flex align-center">
-          <v-img
-            :src="item.image"
-            width="40"
-            height="40"
-            class="rounded mr-3"
-          />
-          <div>
-            <div class="text-subtitle-2">{{ item.name }}</div>
-            <div class="text-caption text-grey">
-              В наличии {{ item.inStock }}
-            </div>
-          </div>
-        </div>
-        <div class="d-flex align-center">
-          <span class="mr-4">{{ item.price }}₽</span>
-          <div class="d-flex align-center">
-            <v-btn
-              icon="mdi-minus"
-              variant="text"
-              density="comfortable"
-              @click="decreaseQuantity(item)"
-            />
-            <span class="mx-2">{{ item.quantity }}</span>
-            <v-btn
-              icon="mdi-plus"
-              variant="text"
-              density="comfortable"
-              @click="increaseQuantity(item)"
-            />
-          </div>
-        </div>
-      </div>
+        :item="item"
+        :itemCount="getItemCount(item)"
+        :maxLimit="item.inStock"
+        @increase="increaseQuantity(item)"
+        @decrease="decreaseQuantity(item)"
+      />
     </div>
 
     <!-- Drawer для выбора элементов -->
@@ -68,86 +43,117 @@
       location="right"
       temporary
       :order="2"
-      width="400"
-      style='top:0; height:100%'
+      :width="drawerWidth"
+      style="top: 0; height: 100%"
     >
-      <v-toolbar flat class="px-4">
-        <v-btn variant="text" icon="mdi-arrow-left" @click="isOpen = false" />
-        <v-toolbar-title>Добавить {{ addButtonText }}</v-toolbar-title>
-      </v-toolbar>
+      <div class="drawer-wrapper bgc-primary">
+        <div class="drawer-content bgc-secondary">
+          <v-toolbar flat class="px-4">
+            <v-btn
+              variant="text"
+              icon="mdi-arrow-left"
+              @click="isOpen = false"
+            />
+            <v-toolbar-title>Добавить {{ addButtonText }}</v-toolbar-title>
+          </v-toolbar>
 
-      <!-- Поиск -->
-      <div class="px-4 py-2">
-        <v-text-field
-          v-model="searchQuery"
-          placeholder="Найти"
-          prepend-inner-icon="mdi-magnify"
-          variant="solo"
-          density="comfortable"
-          hide-details
-          class="bg-grey-lighten-4"
-        />
-      </div>
+          <!-- Поиск -->
+          <div class="px-4 py-2">
+            <v-text-field
+              v-model="searchQuery"
+              placeholder="Найти"
+              prepend-inner-icon="mdi-magnify"
+              variant="solo"
+              density="comfortable"
+              hide-details
+              class="bg-grey-lighten-4"
+            />
+          </div>
 
-      <!-- Список категорий и элементов -->
-      <v-list>
-        <template v-for="category in filteredItems" :key="category.name">
-          <v-list-subheader>{{ category.name }}</v-list-subheader>
-          <v-list-item
-            v-for="item in category.items"
-            :key="item.id"
-            class="item-row"
-          >
-            <div class="d-flex align-center justify-space-between w-100">
-              <div class="d-flex align-center" @click.stop="showDetails(item)">
-                <v-img
-                  :src="item.image"
-                  width="40"
-                  height="40"
-                  class="rounded mr-3"
-                />
-                <div>
-                  <div class="text-subtitle-2">{{ item.name }}</div>
-                  <div class="text-caption text-grey">
-                    В наличии {{ item.inStock }}
+          <!-- Список категорий и элементов -->
+          <v-list>
+            <template v-for="category in filteredItems" :key="category.name">
+              <v-list-subheader>{{ category.name }}</v-list-subheader>
+              <v-list-item
+                v-for="item in category.items"
+                :key="item.id"
+                class="item-row"
+              >
+                <div class="d-flex align-center justify-space-between w-100">
+                  <div
+                    class="d-flex align-center"
+                    @click.stop="showDetails(item)"
+                  >
+                    <v-img
+                      :src="item.image"
+                      width="40"
+                      height="40"
+                      class="rounded mr-3"
+                    />
+                    <div>
+                      <div class="text-subtitle-2">{{ item.name }}</div>
+                      <div class="text-caption text-grey">
+                        В наличии {{ item.inStock }}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="d-flex align-center">
+                    <span class="mr-4">{{ item.price }}₽</span>
+                    <div class="d-flex align-center">
+                      <v-btn
+                        icon="mdi-minus"
+                        variant="text"
+                        density="comfortable"
+                        @click="decrementCount(item)"
+                        :disabled="!getItemCount(item)"
+                      />
+                      <span class="mx-2">{{ getItemCount(item) }}</span>
+                      <v-btn
+                        icon="mdi-plus"
+                        variant="text"
+                        density="comfortable"
+                        @click="incrementCount(item)"
+                        :disabled="isMaxLimitReached(item)"
+                      />
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div class="d-flex align-center">
-                <span class="mr-4">{{ item.price }}₽</span>
-                <v-checkbox
-                  v-model="selectedTemp"
-                  :value="item.id"
-                  hide-details
-                  @click.stop
-                />
-              </div>
-            </div>
-          </v-list-item>
-        </template>
-      </v-list>
+              </v-list-item>
+            </template>
+          </v-list>
 
-      <!-- Футер с кнопками -->
-      <v-card flat class="pa-4 d-flex ga-2">
-        <v-btn
-          block
-          class="action-button"
-          variant="text"
-          @click="isOpen = false"
-          >Назад</v-btn
-        >
-        <v-btn block class="action-button" color="black" @click="addSelected"
-          >Добавить</v-btn
-        >
-      </v-card>
+          <!-- Футер с кнопками -->
+          <v-card flat class="pa-4 d-flex ga-2">
+            <v-btn
+              block
+              class="action-button"
+              variant="text"
+              @click="isOpen = false"
+              >Назад</v-btn
+            >
+            <v-btn
+              block
+              class="action-button"
+              color="black"
+              @click="addSelected"
+              >Добавить</v-btn
+            >
+          </v-card>
+        </div>
+      </div>
     </v-navigation-drawer>
 
-    <SubPageItemDetails v-model="showDetailsDrawer" :item="selectedEquipment" />
+    <SubPageItemDetails
+      :drawerWidth="drawerWidth"
+      v-model="showDetailsDrawer"
+      :item="selectedEquipment"
+    />
   </div>
 </template>
 <script setup>
 import { computed, onErrorCaptured, ref } from "vue";
 import SubPageItemDetails from "./SubPageItemDetails.vue";
+import SelectedItem from "./SelectedItem.vue";
 import { useStore } from "vuex";
 
 const store = useStore();
@@ -167,6 +173,14 @@ const props = defineProps({
   addButtonText: {
     type: String,
     default: "оборудование",
+  },
+  drawerWidth: {
+    type: Number,
+    default: 400,
+  },
+  maxLimit: {
+    type: Number,
+    default: 5,
   },
 });
 
@@ -223,7 +237,6 @@ const totalPrice = computed(() => {
     default:
       break;
   }
-  console.log(total);
   return total;
 });
 
@@ -275,12 +288,80 @@ const addSelected = () => {
   selectedTemp.value = [];
 };
 
+const getItemCount = (item) => {
+  const selectedItem = selectedItems.value.find((i) => i.id === item.id);
+  return selectedItem ? selectedItem.quantity : 0;
+};
+
+const incrementCount = (item) => {
+  const existingItem = selectedItems.value.find((i) => i.id === item.id);
+
+  if (existingItem) {
+    existingItem.quantity++;
+  } else {
+    selectedItems.value.push({ ...item, quantity: 1 });
+  }
+};
+
+const decrementCount = (item) => {
+  const index = selectedItems.value.findIndex((i) => i.id === item.id);
+
+  if (index !== -1) {
+    selectedItems.value[index].quantity--;
+
+    if (selectedItems.value[index].quantity === 0) {
+      selectedItems.value.splice(index, 1);
+    }
+  }
+};
+
+const removeItem = (index) => {
+  selectedItems.value.splice(index, 1);
+};
+
+const isMaxLimitReached = (item) => {
+  const currentCount = getItemCount(item);
+  return currentCount >= item.inStock;
+};
+
 onErrorCaptured((e) => {
   console.error(e);
 });
 </script>
 
 <style lang="scss" scoped>
+.drawer-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+.item-list {
+  border-radius: 20px;
+}
+
+.drawer-content {
+  width: clamp(400px, 50%, 600px);
+  margin-inline: auto;
+  border-radius: 40px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.v-navigation-drawer {
+  overflow-x: hidden;
+
+  @media (max-width: 1023px) {
+    width: 100% !important;
+    max-width: 100vw;
+    z-index: 9999;
+  }
+}
+
 .item-row {
   cursor: pointer;
 }
@@ -288,6 +369,7 @@ onErrorCaptured((e) => {
 .item-row:hover {
   background-color: rgba(0, 0, 0, 0.04);
 }
+
 .action-button {
   min-width: unset;
 }

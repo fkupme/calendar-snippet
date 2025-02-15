@@ -26,18 +26,21 @@
           color="secondary"
           density="compact"
           variant="outlined"
+          style='width: none; height: none;'
         ></v-btn>
         <v-btn
           icon="mdi-menu"
           color="secondary"
           density="compact"
           variant="outlined"
+          style='width: none; height: none;'
         ></v-btn>
         <v-btn
           icon="mdi-arrow-top-right"
           color="secondary"
           density="compact"
           variant="outlined"
+          style='width: none; height: none;'
         ></v-btn>
       </div>
     </div>
@@ -113,7 +116,6 @@ watch(
     height: 100%;
 
     .v-btn {
-      height: 100%;
       aspect-ratio: 1 / 1;
       min-width: auto;
       padding: 0;

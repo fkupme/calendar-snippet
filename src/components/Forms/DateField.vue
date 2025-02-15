@@ -1,36 +1,44 @@
 <template>
-  <v-menu
-    v-model="menu"
-    :close-on-content-click="false"
-    transition="scale-transition"
-    min-width="auto"
-    origin="overlap"
-  >
-    <!-- Активатор -->
-    <template v-slot:activator="{ props }">
-      <v-text-field
-        v-bind="props"
-        :model-value="formattedDateForField"
-        :label="label"
-        readonly
-        clearable
-        @click:clear="updateDate(null)"
-        variant="solo"
-        density="comfortable"
-        hide-details
-        placeholder="Выберите дату"
-      />
-    </template>
-
-    <!-- Контент меню -->
-    <template v-slot:default>
-      <CustomDatePicker
-        v-model="date"
-        @update:model-value="updateDate"
-        @click:cancel="menu = false"
-      />
-    </template>
-  </v-menu>
+  <div class="date-field">
+    <v-menu
+      v-model="menu"
+      :close-on-content-click="false"
+      transition="scale-transition"
+      min-width="auto"
+      :offset="5"
+      location="bottom"
+      position="start"
+    >
+      <!-- Активатор -->
+      <template v-slot:activator="{ props }">
+        <v-text-field
+          v-bind="props"
+          :model-value="formattedDateForField"
+          :label="label"
+          readonly
+          variant="solo"
+          density="compact"
+          class="date-field__input input-hover-focus fs-14 font-weight-medium"
+          hide-details
+          placeholder="Выберите дату"
+          clearable
+          @click:clear="updateDate(null)"
+        >
+          <template v-slot:append-inner>
+            <v-icon class="date-field__icon input-icon-hover">mdi-calendar</v-icon>
+          </template>
+        </v-text-field>
+      </template>
+      <!-- Контент меню -->
+      <template v-slot:default>
+        <CustomDatePicker
+          v-model="date"
+          @update:model-value="updateDate"
+          @click:cancel="menu = false"
+        />
+      </template>
+    </v-menu>
+  </div>
 </template>
 
 <script setup>
@@ -73,7 +81,7 @@ const formattedDateForField = computed(() => {
       day: "2-digit",
       month: "2-digit",
       year: "numeric",
-    })}`;
+    })}`.replace(/^(\w)/, (match) => match.toUpperCase());
   }
 
   // Если передан параметр end
@@ -82,20 +90,20 @@ const formattedDateForField = computed(() => {
       day: "2-digit",
       month: "2-digit",
       year: "numeric",
-    })}`;
+    })}`
   }
 
-  // По умолчанию (если start и end не переданы)
+  // По умолчанию
   return d
     .toLocaleString("ru-RU", {
       weekday: "short",
       day: "2-digit",
       month: "long",
     })
-    .replace(".", ",");
+    .replace(".", ",").replace(/^(\w)/, (match) => match.toUpperCase());
 });
 
-// Синхронизация с внешним значением modelValue
+
 watch(
   () => props.modelValue,
   (newVal) => {
@@ -112,7 +120,7 @@ watch(
   { immediate: true }
 );
 
-// Обновление даты и отправка события в родительский компонент
+
 function updateDate(newDate) {
   if (!newDate) {
     date.value = null;
@@ -131,31 +139,15 @@ function updateDate(newDate) {
 </script>
 
 <style lang="scss" scoped>
-:deep(.v-date-picker) {
-  background: white;
-  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
-  .date-header {
-    border-bottom: 1px solid #e0e0e0;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    .v-btn--icon {
-      background: transparent;
-      color: rgba(0, 0, 0, 0.87);
-      &:hover {
-        background: transparent;
-      }
-    }
-  }
-  .v-date-picker-month__day {
-    border: none;
-    border-radius: 4px;
-    &--selected {
-      background: black;
-      color: white;
-    }
-    &:hover:not(&--selected) {
-      background-color: #f5f5f5;
+@use "@/assets/styles/functions" as f;
+.date-field {
+  position: relative;
+  max-width: 300px;
+
+  &__input {
+    :deep(.v-field__input) {
+      min-height: 44px;
+      padding: 0 12px;
     }
   }
 }

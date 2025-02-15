@@ -1,77 +1,143 @@
 <template>
   <div>
-    <!-- Кнопка для открытия drawer с промокодами -->
     <v-btn
+      v-if="!selectedPromo"
       block
       variant="flat"
-      class="mb-4 color-grey-lighten-1 bg-grey-lighten-4"
+      class="d-inline-flex justify-space-between bgc-field mb-4 text-secondary enter-button"
       @click="isOpen = true"
     >
       Выбрать промокод
-      <v-icon end>mdi-chevron-right</v-icon>
+      <template v-slot:append>
+        <v-icon>mdi-chevron-right</v-icon>
+      </template>
     </v-btn>
 
-    <!-- Отображение выбранного промокода -->
-    <div v-if="selectedPromo" class="mb-4">
-      <div class="d-flex justify-space-between align-center mb-2">
-        <span class="text-subtitle-1">Выбранный промокод:</span>
-        <span class="text-subtitle-1">{{ selectedPromo.promo }}</span>
-        <v-btn variant="flat" size="small" @click="clearSelectedPromo">
-          <v-icon>mdi-close</v-icon>
-        </v-btn>
+    <div v-else class="promo-item selected-promo w-100">
+      <div class="promo-header">
+        <span class="fs-12">Промокод:</span>
+        <span class="fs-14 font-weight-medium">{{ selectedPromo.promo }}</span>
       </div>
-      <div class="pa-2 d-flex align-center justify-space-between bg-grey-lighten-4 rounded">
-        <div>
-          <div class="text-subtitle-2">{{ selectedPromo.description }}</div>
-          <div class="text-caption text-grey">
-            Скидка: {{ selectedPromo.time }} | Позиция: {{ selectedPromo.pos }}
+
+      <div class="promo-main d-flex justify-space-between">
+        <div class="d-flex ga-4">
+          <div>
+            <span class="fs-12">Время</span>
+            <div class="fs-14 font-weight-medium">{{ selectedPromo.time }}</div>
           </div>
+        </div>
+        <div>
+          <span class="fs-12">Позиции</span>
+          <div class="fs-14 font-weight-medium">{{ selectedPromo.pos }}</div>
+        </div>
+        <div class="d-flex align-center">
+          <div class="me-2">
+            <span class="fs-12">Источник</span>
+            <div class="fs-14">{{ selectedPromo.source }}</div>
+          </div>
+          <v-btn variant="flat" size="small" @click="isOpen = true">
+            <v-icon>mdi-pencil-outline</v-icon>
+          </v-btn>
         </div>
       </div>
     </div>
 
-    <!-- Drawer для выбора промокодов -->
-    <v-navigation-drawer v-model="isOpen" location="right" temporary width="400">
-      <v-toolbar flat class="px-4">
-        <v-btn variant="text" icon="mdi-arrow-left" @click="isOpen = false" />
-        <v-toolbar-title>Выберите промокод</v-toolbar-title>
-      </v-toolbar>
+    <v-navigation-drawer
+      v-model="isOpen"
+      location="right"
+      temporary
+      :order="2"
+      :width="drawerWidth"
+      style="top: 0; height: 100%; bottom: 0"
+    >
+      <div class="drawer-wrapper bgc-primary">
+        <div class="drawer-content bgc-secondary">
+          <v-toolbar flat class="px-4">
+            <v-btn
+              variant="text"
+              icon="mdi-arrow-left"
+              @click="isOpen = false"
+            />
+            <v-toolbar-title>Выберите промокод</v-toolbar-title>
+          </v-toolbar>
 
-      <!-- Поиск -->
-      <div class="px-4 py-2">
-        <v-text-field
-          v-model="searchQuery"
-          placeholder="Найти промокод"
-          prepend-inner-icon="mdi-magnify"
-          variant="solo"
-          density="comfortable"
-          hide-details
-          class="bg-grey-lighten-4"
-        />
-      </div>
-      
-      <!-- СДЕЛАТЬ РАДИО ГРУППУ-->
-      <v-list>
-        <v-list-item
-          v-for="promo in filteredPromos"
-          :key="promo.promo"
-          class="item-row"
-          @click="selectPromo(promo)"
-        >
-          <div class="d-flex align-center justify-space-between w-100">
-            <div class="d-flex align-center">
-              <div>
-                <div class="text-subtitle-2">{{ promo.promo }}</div>
-                <div class="text-caption text-grey">{{ promo.description }}</div>
-              </div>
-            </div>
-            <div class="d-flex align-center">
-              <span class="mr-4">{{ promo.time }}</span>
-            </div>
+          <div class="px-4 py-2">
+            <v-text-field
+              v-model="searchQuery"
+              placeholder="Найти промокод"
+              prepend-inner-icon="mdi-magnify"
+              variant="solo"
+              density="comfortable"
+              hide-details
+              class="search-field"
+            />
           </div>
-        </v-list-item>
-        <!-- Добавить кнопку "Применить" в шаблон -->
-      </v-list>
+
+          <v-list class="px-4">
+            <v-list-item
+              v-for="promo in filteredPromos"
+              :key="promo.promo"
+              @click="selectPromo(promo)"
+              class="promo-item"
+              rounded
+              :class="{
+                'selected-promo': selectedPromo?.promo === promo.promo,
+              }"
+            >
+              <div class="promo-header mb-2">
+                <span class="fs-12 text-secondary">Промокод:</span>
+                <span class="fs-14 font-weight-medium">{{ promo.promo }}</span>
+              </div>
+
+              <div class="promo-main d-flex justify-space-between mb-2">
+                <div class="d-flex ga-4">
+                  <div>
+                    <span class="fs-12 text-secondary">Время</span>
+                    <div class="fs-14 font-weight-medium">{{ promo.time }}</div>
+                  </div>
+                </div>
+                <div>
+                  <span class="fs-12 text-secondary">Позиции</span>
+                  <div class="fs-14 font-weight-medium">{{ promo.pos }}</div>
+                </div>
+                <div>
+                  <span class="fs-12 text-secondary">Источник</span>
+                  <div class="fs-14">{{ promo.source }}</div>
+                </div>
+              </div>
+
+              <!-- Футер -->
+              <div class="promo-footer">
+                <span class="fs-12 font-weight-medium text-secondary"
+                  >Описание</span
+                >
+                <div class="fs-12">{{ promo.description }}</div>
+              </div>
+            </v-list-item>
+          </v-list>
+
+          <div class="actions-wrapper">
+            <v-card flat class="pa-4 d-flex ga-2">
+              <v-btn
+                block
+                class="action-button"
+                variant="text"
+                @click="isOpen = false"
+              >
+                Назад
+              </v-btn>
+              <v-btn
+                block
+                class="action-button"
+                color="black"
+                @click="confirmPromo"
+              >
+                Применить
+              </v-btn>
+            </v-card>
+          </div>
+        </div>
+      </div>
     </v-navigation-drawer>
   </div>
 </template>
@@ -84,41 +150,131 @@ const props = defineProps({
     type: Array,
     default: () => [],
   },
+  drawerWidth: {
+    type: Number,
+    default: 400,
+  },
+  modelValue: {
+    type: [Object, String],
+    default: null,
+  },
 });
 
 const emit = defineEmits(["update:modelValue"]);
-
 const isOpen = ref(false);
 const searchQuery = ref("");
-const selectedPromo = ref(null);
+const selectedPromo = ref(
+  props.modelValue && typeof props.modelValue === "object"
+    ? props.modelValue
+    : null
+);
 
 const filteredPromos = computed(() => {
+  if (!searchQuery.value) return props.promos;
+
   const query = searchQuery.value.toLowerCase();
-  return props.promos.filter((promo) =>
-    promo.promo.toLowerCase().includes(query) ||
-    promo.description.toLowerCase().includes(query)
+  return props.promos.filter(
+    (promo) =>
+      promo.promo.toLowerCase().includes(query) ||
+      promo.description.toLowerCase().includes(query)
   );
 });
 
 const selectPromo = (promo) => {
-  selectedPromo.value = promo;
-  isOpen.value = false;
-  emit("update:modelValue", promo);
+  selectedPromo.value =
+    selectedPromo.value?.promo === promo.promo ? null : promo;
 };
 
-
-const clearSelectedPromo = () => {
-  selectedPromo.value = null;
-  emit("update:modelValue", null);
+const confirmPromo = () => {
+  emit("update:modelValue", selectedPromo.value);
+  isOpen.value = false;
 };
 </script>
 
-
 <style lang="scss" scoped>
-.item-row {
-  cursor: pointer;
+:deep(.v-list-item__content) {
+  width: 100%;
 }
-.item-row:hover {
-  background-color: rgba(0, 0, 0, 0.04);
+.drawer-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+.drawer-content {
+  width: clamp(400px, 50%, 600px);
+  margin-inline: auto;
+  border-radius: 40px;
+  max-height: 90vh;
+  height: 100%;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.search-field {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.v-navigation-drawer {
+  overflow-x: hidden;
+
+  @media (max-width: 1023px) {
+    width: 100% !important;
+    max-width: 100vw;
+    z-index: 9999;
+  }
+}
+
+.promo-item {
+  cursor: pointer;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  margin-block: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  width: 100%;
+  box-sizing: border-box;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+}
+
+.selected-promo {
+  border: 2px solid black !important;
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.promo-header,
+.promo-main,
+.promo-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.promo-main {
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+.actions-wrapper {
+  margin-top: auto;
+}
+
+.action-button {
+  min-width: unset;
+}
+
+.item-list {
+  border-radius: 20px;
 }
 </style>

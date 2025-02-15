@@ -2,15 +2,14 @@
   <div class="wrapper">
     <!-- Отображение карточки клиента -->
     <ClientCard
-      v-if="selectedClient"
+      v-if="selectedClient && !newClient"
       :client="selectedClient"
       @edit="enableAutocomplete"
       class="mb-4"
     />
 
-    <!-- Отображение автокомплита -->
     <v-autocomplete
-      v-else
+      v-if="!newClient && !selectedClient?.id"
       v-model="selectedClient"
       :label="'Клиент'"
       :items="clients"
@@ -18,7 +17,7 @@
       :custom-filter="customFilter"
       variant="solo"
       density="default"
-      class="mb-4"
+      class="mb-4 input-hover-focus"
       hide-details
       autocomplete="off"
       item-title="title"
@@ -33,8 +32,8 @@
           </template>
           <template #subtitle>
             <div class="d-flex flex-column text-caption">
-              <span>{{ item.raw.phone }}</span>
-              <span class="text-grey">{{ item.raw.email }}</span>
+              <span>{{ item.raw.raw.phone }}</span>
+              <span class="text-grey">{{ item.raw.raw.email }}</span>
             </div>
           </template>
         </v-list-item>
@@ -51,14 +50,12 @@
       </template>
     </v-autocomplete>
 
-    <!-- Форма регистрации нового клиента -->
     <ClientRegistrationForm
       v-if="newClient"
       @success="handleClientCreated"
       @cancel="newClient = false"
     />
 
-    <!-- Снекбар для уведомлений -->
     <v-snackbar v-model="snackbar.show" :color="snackbar.color" :timeout="3000">
       {{ snackbar.text }}
     </v-snackbar>
@@ -106,12 +103,12 @@ const customFilter = () => true;
 
 const fetchClients = async (search) => {
   if (!search) return;
-  let fetched = null;
   try {
-    fetched = await store.dispatch("calendar/fetchClients", {
+    const fetched = await store.dispatch("calendar/fetchClients", {
       search,
       searchFields: ["name", "phone", "email"],
     });
+    return fetched;
   } catch (error) {
     console.log(error);
   }

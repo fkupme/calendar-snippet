@@ -8,7 +8,7 @@ body, div {
 .fs-8{
   font-size: f.toVW(8px, 1366px);
   @media (max-width: 1023px) {
-    font-size: f.toVW(8px, 1023px);
+    font-size: f.toVW(10px, 1023px);
   }
 }
 
@@ -16,7 +16,7 @@ body, div {
 .fs-9{
 	font-size: f.toVW(9px, 1366px);
   @media (max-width: 1023px) {
-    font-size: f.toVW(9px, 1023px);
+    font-size: f.toVW(11px, 1023px);
   }
 }
 
@@ -24,7 +24,7 @@ body, div {
 .fs-10{
 	font-size: f.toVW(10px, 1366px);
   @media (max-width: 1023px) {
-    font-size: f.toVW(10px, 1023px);
+    font-size: f.toVW(12px, 1023px);
   }
 }
 
@@ -32,7 +32,7 @@ body, div {
 .fs-12{
 	font-size: f.toVW(12px, 1366px);
   @media (max-width: 1023px) {
-    font-size: f.toVW(12px, 1023px);
+    font-size: f.toVW(14px, 1023px);
   }
 }
 
@@ -40,21 +40,42 @@ body, div {
 .fs-14{
 	font-size: f.toVW(14px, 1366px);
   @media (max-width: 1023px) {
-    font-size: f.toVW(14px, 1023px);
+    font-size: f.toVW(16px, 1023px);
   }
 }
 
 .fs-15{
   font-size: f.toVW(15px, 1366px);
   @media (max-width: 1023px) {
-    font-size: f.toVW(15px, 1023px);
+    font-size: f.toVW(17px, 1023px);
   }
 }
 
 .fs-16{
 	font-size: f.toVW(16px, 1366px);
   @media (max-width: 1023px) {
-    font-size: f.toVW(16px, 1023px);
+    font-size: f.toVW(18px, 1023px);
+  }
+}
+
+.fs-18{
+	font-size: f.toVW(18px, 1366px);
+  @media (max-width: 1023px) {
+    font-size: f.toVW(20px, 1023px);
+  }
+}  
+
+.fs-20{
+  font-size: f.toVW(20px, 1366px);
+  @media (max-width: 1023px) {
+    font-size: f.toVW(24px, 1023px);
+  }
+}
+
+.fs-26{
+  font-size: f.toVW(26px, 1366px);
+  @media (max-width: 1023px) {
+    font-size: f.toVW(28px, 1023px);
   }
 }
 

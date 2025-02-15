@@ -261,7 +261,7 @@ const calendarModule = {
 				email: "semen@gmail.com",
 				closed: 24,
 				messages: 24,
-				rating: 1200,
+				points: 1200,
 				fee: 550,
 				status: 'pro',
 				avatar: '/images/user-avatar.png'
@@ -273,7 +273,7 @@ const calendarModule = {
 				email: "ogon@music.com",
 				closed: 36,
 				messages: 48,
-				rating: 1500,
+				points: 1500,
 				fee: 700,
 				status: 'pro',
 				avatar: null
@@ -285,7 +285,7 @@ const calendarModule = {
 				email: "kipelov@music.com",
 				closed: 42,
 				messages: 56,
-				rating: 1800,
+				points: 1800,
 				status: null,
 				avatar: '/images/user-avatar.png'
 			},
@@ -296,7 +296,7 @@ const calendarModule = {
 				email: "amatory@music.com",
 				closed: 28,
 				messages: 32,
-				rating: 1300,
+				points: 1300,
 				fee: 600,
 				status: 'pro',
 				avatar: null
@@ -308,7 +308,7 @@ const calendarModule = {
 				email: "raskol@music.com",
 				closed: 30,
 				messages: 36,
-				rating: 1400,
+				points: 1400,
 				fee: 650,
 				status: 'pro',
 				avatar: '/images/user-avatar.png'
@@ -320,7 +320,7 @@ const calendarModule = {
 				email: "brecha@music.com",
 				closed: 26,
 				messages: 30,
-				rating: 1250,
+				points: 1250,
 				status: null,
 				avatar: null
 			},
@@ -331,7 +331,7 @@ const calendarModule = {
 				email: "leps@music.com",
 				closed: 34,
 				messages: 40,
-				rating: 1600,
+				points: 1600,
 				fee: 720,
 				status: 'pro',
 				avatar: '/images/user-avatar.png'
@@ -343,7 +343,7 @@ const calendarModule = {
 				email: "allegrova@music.com",
 				closed: 22,
 				messages: 28,
-				rating: 1100,
+				points: 1100,
 				status: null,
 				avatar: null
 			},
@@ -354,7 +354,7 @@ const calendarModule = {
 				email: "kirkorov@music.com",
 				closed: 50,
 				messages: 60,
-				rating: 2000,
+				points: 2000,
 				fee: 1000,
 				status: 'pro',
 				avatar: '/images/user-avatar.png'
@@ -366,7 +366,7 @@ const calendarModule = {
 				email: "pugacheva@music.com",
 				closed: 45,
 				messages: 55,
-				rating: 1900,
+				points: 1900,
 				fee: 950,
 				status: 'pro',
 				avatar: null
@@ -378,7 +378,7 @@ const calendarModule = {
 				email: "bilan@music.com",
 				closed: 40,
 				messages: 50,
-				rating: 1800,
+				points: 1800,
 				status: null,
 				avatar: '/images/user-avatar.png'
 			},
@@ -389,7 +389,7 @@ const calendarModule = {
 				email: "leps@music.com",
 				closed: 35,
 				messages: 45,
-				rating: 1700,
+				points: 1700,
 				fee: 850,
 				status: 'pro',
 				avatar: null
@@ -401,7 +401,7 @@ const calendarModule = {
 				email: "valeria@music.com",
 				closed: 30,
 				messages: 40,
-				rating: 1600,
+				points: 1600,
 				status: null,
 				avatar: '/images/user-avatar.png'
 			}
